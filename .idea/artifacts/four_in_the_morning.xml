@@ -1,11 +1,14 @@
 <component name="ArtifactManager">
-  <artifact type="exploded-war" name="four-in-the-morning:war exploded">
-    <output-path>$PROJECT_DIR$/out/artifacts/four_in_the_morning_war_exploded</output-path>
+  <artifact type="exploded-war" name="four-in-the-morning">
+    <output-path>$PROJECT_DIR$/out/artifacts/four_in_the_morning</output-path>
     <root id="root">
       <element id="javaee-facet-resources" facet="four-in-the-morning/web/Web" />
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
           <element id="module-output" name="four-in-the-morning" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="com.google.code.gson:gson:2.51" />
         </element>
       </element>
     </root>

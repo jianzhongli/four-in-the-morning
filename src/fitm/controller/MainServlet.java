@@ -1,4 +1,7 @@
-package fitm;
+package fitm.controller;
+
+import fitm.util.OpenerHelper;
+import fitm.util.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +19,10 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        if (!Utils.hasLogin(req)) {
+            req.getRequestDispatcher("/login").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        }
     }
 }

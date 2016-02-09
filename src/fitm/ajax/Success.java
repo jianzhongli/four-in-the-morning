@@ -1,4 +1,4 @@
-package fitm;
+package fitm.ajax;
 
 public class Success extends Response {
     Object data;

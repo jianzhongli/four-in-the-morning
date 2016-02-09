@@ -1,4 +1,4 @@
-package fitm;
+package fitm.ajax;
 
 public class Failure extends Response {
     private String msg;

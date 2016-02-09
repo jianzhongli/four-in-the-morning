@@ -11,23 +11,37 @@
         <res-auth>Container</res-auth>
     </resource-ref>
 
+    <!--AJAX related -->
+    <servlet>
+        <servlet-name>AjaxLoginServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxLoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxLoginServlet</servlet-name>
+        <url-pattern>/ajax/login</url-pattern>
+    </servlet-mapping>
+
+
+    <!--End AJAX related-->
+
+
+    <!--Controllers-->
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
-        <servlet-class>fitm.LoginServlet</servlet-class>
+        <servlet-class>fitm.controller.LoginServlet</servlet-class>
     </servlet>
-
-    <servlet>
-        <servlet-name>MainServlet</servlet-name>
-        <servlet-class>fitm.MainServlet</servlet-class>
-    </servlet>
-
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/login</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>MainServlet</servlet-name>
+        <servlet-class>fitm.controller.MainServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>MainServlet</servlet-name>
         <url-pattern></url-pattern>
     </servlet-mapping>
+    <!--End Controllers-->
 </web-app>

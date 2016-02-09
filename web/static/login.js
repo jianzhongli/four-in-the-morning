@@ -3,7 +3,7 @@ function login() {
     var password = document.getElementById("password").value;
     if (userid.length > 0 && password.length > 0) {
         xhttp = new XMLHttpRequest();
-        xhttp.open("POST", "/login", true);
+        xhttp.open("POST", "/ajax/login", true);
         xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
         xhttp.send("userid="+userid+"&password="+password);
         xhttp.onreadystatechange = function () {
@@ -12,7 +12,7 @@ function login() {
                 if (!obj.success) {
                     // TODO: 如果登录失败，提示用户错误信息
                 } else { // 如果登录成功，重定向至用户个人主页
-                    window.location = "/";
+                    window.location.href = '/';
                 }
             }
         }

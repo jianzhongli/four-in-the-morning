@@ -1,4 +1,4 @@
-package fitm;
+package fitm.ajax;
 
 public class Response {
     int success;

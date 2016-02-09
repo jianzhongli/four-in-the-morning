@@ -1,6 +1,8 @@
-package fitm;
+package fitm.ajax;
 
 import com.google.gson.Gson;
+import fitm.util.OpenerHelper;
+import fitm.util.Tags;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-public class LoginServlet extends HttpServlet {
+public class AjaxLoginServlet extends HttpServlet {
     OpenerHelper openerHelper;
 
     @Override
@@ -20,7 +22,8 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/login.jsp").forward(req, resp);
+        PrintWriter writer = resp.getWriter();
+        writer.write(req.getRequestURI());
     }
 
     @Override

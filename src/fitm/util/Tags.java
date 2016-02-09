@@ -1,6 +1,6 @@
-package fitm;
+package fitm.util;
 
-interface Tags {
+public interface Tags {
     final static String TAG_USERID = "userid";
     final static String TAG_PASSWORD = "password";
 
