@@ -34,8 +34,8 @@ public class User {
     }
 
     public static boolean validate(String userid, String password) throws ServletException {
-        SQLHelper helper = SQLHelper.getInstance();
         boolean flag = false;
+        SQLHelper helper = SQLHelper.getInstance();
         String[] columns = {SQLHelper.Columns.PASSWORD};
         String selection = SQLHelper.Columns.USER_ID + "=? ";
         String[] selectionArgs = {userid};

@@ -1,6 +1,8 @@
 package fitm.controller;
 
+import fitm.model.User;
 import fitm.util.SQLHelper;
+import fitm.util.Tags;
 import fitm.util.Utils;
 
 import javax.servlet.ServletException;
@@ -19,10 +21,12 @@ public class MainServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        if (!Utils.hasLogin(req)) {
-            req.getRequestDispatcher("/login").forward(req, resp);
-        } else {
+        User user = Utils.getCurrentUser(req);
+        if (user != null) {
+            req.setAttribute(Tags.TAG_REALNAME, user.getName());
             req.getRequestDispatcher("/main.jsp").forward(req, resp);
+        } else {
+            req.getRequestDispatcher("/login").forward(req, resp);
         }
     }
 }
