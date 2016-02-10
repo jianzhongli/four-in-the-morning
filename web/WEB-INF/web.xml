@@ -21,7 +21,14 @@
         <url-pattern>/ajax/login</url-pattern>
     </servlet-mapping>
 
-
+    <servlet>
+        <servlet-name>AjaxLogoutServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxLogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxLogoutServlet</servlet-name>
+        <url-pattern>/ajax/logout</url-pattern>
+    </servlet-mapping>
     <!--End AJAX related-->
 
 

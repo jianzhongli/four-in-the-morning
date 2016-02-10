@@ -11,11 +11,11 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class OpenerHelper {
+public class SQLHelper {
     private DataSource pool; // Database connection mDataSourcePool
-    private static OpenerHelper mInsatnce;
+    private static SQLHelper mInsatnce;
 
-    private OpenerHelper() throws ServletException {
+    private SQLHelper() throws ServletException {
         try {
             // Create a JNDI Initial context to be able to lookup the Datasource
             InitialContext context = new InitialContext();
@@ -25,41 +25,22 @@ public class OpenerHelper {
                 throw new ServletException("Unknown DataSource: "+ Tags.DATA_SOURCE);
             }
         } catch (NamingException ex) {
-            Logger.getLogger(OpenerHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    public static OpenerHelper getInstance() throws ServletException {
+    public static SQLHelper getInstance() throws ServletException {
         if (mInsatnce == null) {
-            mInsatnce = new OpenerHelper();
+            mInsatnce = new SQLHelper();
         }
         return mInsatnce;
     }
 
-    public boolean validate(String userid, String password) {
-        boolean flag = false;
-        String[] columns = {Columns.PASSWORD};
-        String selection = Columns.USER_ID + "=? ";
-        String[] selectionArgs = {userid};
-        ResultSet rs = query(TABLE_USER_WEB, columns, selection, selectionArgs, null);
-        try {
-            while (rs.next()) {
-                if (password.equals(rs.getString(Columns.PASSWORD))) {
-                    flag = true;
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(OpenerHelper.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        return flag;
-    }
-
-    final static String TABLE_USER_WEB = "USER_WEB";
-    final static String TABLE_COURSE = "[dbo].[COURSE]";
-    final static String TABLE_COURSE_CLASS = "[dbo].[COURSE_CLASS]";
-    final static String TABLE_CLASS_STUDENT = "[dbo].[CLASS_STUDENT]";
-    private interface Columns {
+    final public static String TABLE_USER_WEB = "USER_WEB";
+    final public static String TABLE_COURSE = "[dbo].[COURSE]";
+    final public static String TABLE_COURSE_CLASS = "[dbo].[COURSE_CLASS]";
+    final public static String TABLE_CLASS_STUDENT = "[dbo].[CLASS_STUDENT]";
+    public interface Columns {
         final static String USER_ID                 = "user_id";
         final static String PASSWORD                = "password";
         final static String REALNAME                = "realname";
@@ -135,7 +116,21 @@ public class OpenerHelper {
 
             rs = stat.executeQuery(sb.toString());
         } catch (SQLException ex) {
-            Logger.getLogger(OpenerHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public ResultSet executeQuery(String sql) {
+        ResultSet rs = null;
+        Connection conn;
+        Statement stat;
+        try {
+            conn = pool.getConnection();
+            stat = conn.createStatement();
+            rs = stat.executeQuery(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
     }

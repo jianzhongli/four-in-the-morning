@@ -1,6 +1,6 @@
 package fitm.controller;
 
-import fitm.util.OpenerHelper;
+import fitm.util.SQLHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
-    OpenerHelper openerHelper;
+    SQLHelper SQLHelper;
 
     @Override
     public void init() throws ServletException {
-        openerHelper = OpenerHelper.getInstance();
+        SQLHelper = SQLHelper.getInstance();
     }
 
     @Override
