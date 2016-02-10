@@ -20,7 +20,7 @@
                     <span class="mdl-layout-title">凌晨四点线上作业提交系统</span>
                     <div class="mdl-layout-spacer"></div>
                     <div class="mdl-dropdown-menu">
-                        <span>${realname}(${userid})</span>
+                        <span>${realname}（${userid}）</span>
                         <button id="accbtn" class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon">
                             <i class="material-icons" role="presentation">arrow_drop_down</i>
                         </button>
@@ -31,29 +31,20 @@
                 </div>
                 <!-- Tabs -->
                 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
-                    <a href="#scroll-tab-1" class="mdl-layout__tab is-active">总览</a>
-                    <a href="#scroll-tab-2" class="mdl-layout__tab">课程</a>
-                    <a href="#scroll-tab-3" class="mdl-layout__tab">作业</a>
+                    <a href="#tab-overview" class="mdl-layout__tab is-active">总览</a>
+                    <a href="#tab-course" class="mdl-layout__tab">课程</a>
+                    <a href="#tab-homework" class="mdl-layout__tab">作业</a>
                 </div>
             </header>
-            <main class="mdl-layout__content">
-                <section class="mdl-layout__tab-panel is-active" id="scroll-tab-1">
-                    <div class="page-content"><!-- Your content goes here --></div>
+            <main class="mdl-layout__content mdl-color--grey-100">
+                <section class="mdl-layout__tab-panel is-active" id="tab-overview">
+                    <jsp:include page="page-overview.jsp"/>
                 </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-2">
-                    <div class="page-content"><!-- Your content goes here --></div>
+                <section class="mdl-layout__tab-panel" id="tab-course">
+                    <jsp:include page="page-course.jsp"/>
                 </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-3">
-                    <div class="page-content"><!-- Your content goes here --></div>
-                </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-4">
-                    <div class="page-content"><!-- Your content goes here --></div>
-                </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-5">
-                    <div class="page-content"><!-- Your content goes here --></div>
-                </section>
-                <section class="mdl-layout__tab-panel" id="scroll-tab-6">
-                    <div class="page-content"><!-- Your content goes here --></div>
+                <section class="mdl-layout__tab-panel" id="tab-homework">
+                    <jsp:include page="page-homework.jsp"/>
                 </section>
             </main>
         </div>
