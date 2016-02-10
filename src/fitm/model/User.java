@@ -47,7 +47,7 @@ public class User {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return flag;

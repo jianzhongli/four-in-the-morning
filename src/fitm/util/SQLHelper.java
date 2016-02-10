@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 
 public class SQLHelper {
     private DataSource pool; // Database connection mDataSourcePool
-    private static SQLHelper mInsatnce;
+    private static SQLHelper mInstance;
 
     private SQLHelper() throws ServletException {
         try {
@@ -30,10 +30,10 @@ public class SQLHelper {
     }
 
     public static SQLHelper getInstance() throws ServletException {
-        if (mInsatnce == null) {
-            mInsatnce = new SQLHelper();
+        if (mInstance == null) {
+            mInstance = new SQLHelper();
         }
-        return mInsatnce;
+        return mInstance;
     }
 
     final public static String TABLE_USER_WEB = "USER_WEB";

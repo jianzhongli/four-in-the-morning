@@ -29,6 +29,15 @@
         <servlet-name>AjaxLogoutServlet</servlet-name>
         <url-pattern>/ajax/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AjaxCoursesServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxCoursesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxCoursesServlet</servlet-name>
+        <url-pattern>/ajax/courses</url-pattern>
+    </servlet-mapping>
     <!--End AJAX related-->
 
 

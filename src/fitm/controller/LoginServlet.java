@@ -9,11 +9,11 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LoginServlet extends HttpServlet {
-    SQLHelper SQLHelper;
+    SQLHelper helper;
 
     @Override
     public void init() throws ServletException {
-        SQLHelper = SQLHelper.getInstance();
+        helper = SQLHelper.getInstance();
     }
 
     @Override

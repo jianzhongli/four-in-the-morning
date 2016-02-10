@@ -24,8 +24,9 @@ public class AjaxCoursesServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Response response;
+        resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
+        Response response;
 
         if (Utils.hasLogin(req)) {
             HttpSession session = req.getSession();
