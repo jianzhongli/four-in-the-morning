@@ -26,8 +26,8 @@ window.onload = function() {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             var obj = JSON.parse(xhttp.responseText);
             if (!obj.success) {
-                // TODO: 如果注销失败，提示用户错误信息
-            } else { // 如果注销成功，重定向至登录页面
+                // 如果失败，给点提示
+            } else {
                 var course_list = JSON.parse(xhttp.responseText).data;
                 var course_list_node = document.getElementById("course-list");
                 var list_item_html = "";

@@ -43,6 +43,24 @@
 
     <!--Controllers-->
     <servlet>
+        <servlet-name>HomeworkServlet</servlet-name>
+        <servlet-class>fitm.controller.HomeworkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeworkServlet</servlet-name>
+        <url-pattern>/homework</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CoursesServlet</servlet-name>
+        <servlet-class>fitm.controller.CoursesServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CoursesServlet</servlet-name>
+        <url-pattern>/courses</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>fitm.controller.LoginServlet</servlet-class>
     </servlet>

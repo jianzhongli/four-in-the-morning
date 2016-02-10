@@ -31,7 +31,7 @@ public class AjaxCoursesServlet extends HttpServlet {
         if (Utils.hasLogin(req)) {
             HttpSession session = req.getSession();
             String userid  = session.getAttribute(Tags.TAG_USERID).toString();
-            ArrayList<Course> courseArrayList =  Course.getCoursesList(userid);
+            ArrayList<Course> courseArrayList = Course.getCoursesList(userid);
             response = new Success(courseArrayList);
         } else {
             response = new Failure("用户未登录。");
