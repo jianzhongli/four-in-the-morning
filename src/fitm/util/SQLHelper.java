@@ -1,5 +1,7 @@
 package fitm.util;
 
+import fitm.model.HomeworkPost;
+
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
@@ -8,6 +10,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.jar.Pack200;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,9 +40,10 @@ public class SQLHelper {
     }
 
     final public static String TABLE_USER_WEB = "USER_WEB";
-    final public static String TABLE_COURSE = "[dbo].[COURSE]";
-    final public static String TABLE_COURSE_CLASS = "[dbo].[COURSE_CLASS]";
-    final public static String TABLE_CLASS_STUDENT = "[dbo].[CLASS_STUDENT]";
+    final public static String TABLE_COURSE = "COURSE";
+    final public static String TABLE_COURSE_CLASS = "COURSE_CLASS";
+    final public static String TABLE_CLASS_STUDENT = "CLASS_STUDENT";
+    final public static String TABLE_HOMEWORK_POST = "HOMEWORK_POST";
     public interface Columns {
         final static String USER_ID                 = "user_id";
         final static String PASSWORD                = "password";
@@ -133,5 +137,39 @@ public class SQLHelper {
             Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rs;
+    }
+
+    public int executeUpdate(String sql) {
+        ResultSet rs = null;
+        Connection conn;
+        Statement stat;
+        int ret = -1;
+        try {
+            conn = pool.getConnection();
+            stat = conn.createStatement();
+            ret = stat.executeUpdate(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return ret;
+    }
+
+    public boolean insertHomeworkPost(HomeworkPost homeworkPost) {
+        String sql = String.format(
+                "INSERT INTO %s VALUES (%s %s %s %s %s %s %s)",
+                TABLE_HOMEWORK_POST,
+                homeworkPost.getCourse_id(),
+                homeworkPost.getHomework_id(),
+                homeworkPost.getHomework_title(),
+                homeworkPost.getHoemwork_description(),
+                homeworkPost.getAttatch_file(),
+                homeworkPost.getPost_date(),
+                homeworkPost.getDdl()
+        );
+        if (executeUpdate(sql) >= 0) {
+            return true;
+        }
+
+        return true;
     }
 }

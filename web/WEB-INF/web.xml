@@ -38,6 +38,15 @@
         <servlet-name>AjaxCoursesServlet</servlet-name>
         <url-pattern>/ajax/courses</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AjaxHomeworkServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxPostHomeworkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxHomeworkServlet</servlet-name>
+        <url-pattern>/ajax/homework</url-pattern>
+    </servlet-mapping>
     <!--End AJAX related-->
 
 
