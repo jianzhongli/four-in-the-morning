@@ -17,7 +17,7 @@ public class HomeworkServlet extends HttpServlet {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
             req.setAttribute(Tags.TAG_REALNAME, user.getName());
-            req.getRequestDispatcher("/homework.jsp").forward(req, resp);
+            req.getRequestDispatcher(Path.HOMEOWRK).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
         }

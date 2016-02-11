@@ -17,7 +17,7 @@ public class CoursesServlet extends HttpServlet {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
             req.setAttribute(Tags.TAG_REALNAME, user.getName());
-            req.getRequestDispatcher("/courses.jsp").forward(req, resp);
+            req.getRequestDispatcher(Path.COURSES).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
         }

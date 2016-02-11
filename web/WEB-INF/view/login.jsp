@@ -1,10 +1,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
     <head>
-        <link rel="stylesheet" href="./static/mdl/material.min.css" type="text/css">
-        <link rel="stylesheet" href="./static/material-icons.css" type="text/css">
-        <script src="./static/mdl/material.min.js" type="application/javascript"></script>
-        <script src="./static/login.js" type="application/javascript"></script>
+        <link rel="stylesheet" href="../../static/mdl/material.min.css" type="text/css">
+        <link rel="stylesheet" href="../../static/material-icons.css" type="text/css">
+        <script src="../../static/mdl/material.min.js" type="application/javascript"></script>
+        <script src="../../static/login.js" type="application/javascript"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <style>
