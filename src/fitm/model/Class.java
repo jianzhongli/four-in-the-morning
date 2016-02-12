@@ -56,8 +56,7 @@ public class Class {
             while(rs.next()) {
                 Long classId = rs.getLong(SQLHelper.Columns.CLASS_ID);
                 String className = rs.getString(SQLHelper.Columns.CLASS_NAME);
-                //TO DO: Teacher
-                Teacher teacher = new Teacher(classId, "HAHA_TEACHER");
+                Teacher teacher = new Teacher(Long.parseLong(userid), User.getRealName(userid));
                 ArrayList<Student> studentsArrayList = Student.getStudentsList(classId);
                 classeArrayList.add(new Class(classId, className, teacher, studentsArrayList));
             }

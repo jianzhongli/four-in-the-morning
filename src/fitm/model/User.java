@@ -68,4 +68,21 @@ public class User {
         }
         return userType;
     }
+
+    public static String getRealName(String userid) throws ServletException {
+        String realName = null;
+        SQLHelper helper = SQLHelper.getInstance();
+        String[] columns = {SQLHelper.Columns.REALNAME};
+        String selection = SQLHelper.Columns.USER_ID + "=? ";
+        String[] selectionArgs = {userid};
+        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, columns, selection, selectionArgs, null);
+        try {
+            while(rs.next()) {
+                realName = rs.getString(SQLHelper.Columns.REALNAME);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return realName;
+    }
 }
