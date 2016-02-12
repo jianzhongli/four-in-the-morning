@@ -27,16 +27,22 @@ public class AjaxCoursesServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
         Response response;
+        String courseid = req.getParameter(Tags.TAG_COURSEID);
 
         if (Utils.hasLogin(req)) {
             HttpSession session = req.getSession();
             String userid  = session.getAttribute(Tags.TAG_USERID).toString();
-            ArrayList<Course> courseArrayList = Course.getCoursesList(userid);
-            response = new Success(courseArrayList);
+            String userType = session.getAttribute(Tags.TAG_USERTYPE).toString();
+            if(courseid == null) {
+                ArrayList<Course> courseArrayList = Course.getCoursesList(userid);
+                response = new Success(courseArrayList);
+            } else {
+                Course course = Course.getCourseDetail(courseid, userid, userType);
+                response = new Success(course);
+            }
         } else {
             response = new Failure("用户未登录。");
         }
-
         writer.write(Utils.getGson().toJson(response));
     }
 

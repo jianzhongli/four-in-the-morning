@@ -49,7 +49,23 @@ public class User {
         } catch (SQLException ex) {
             Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
-
         return flag;
+    }
+
+    public static String getUserType(String userid) throws ServletException {
+        String userType = null;
+        SQLHelper helper = SQLHelper.getInstance();
+        String[] columns = {SQLHelper.Columns.USERTYPE};
+        String selection = SQLHelper.Columns.USER_ID + "=? ";
+        String[] selectionArgs = {userid};
+        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, columns, selection, selectionArgs, null);
+        try {
+            while(rs.next()) {
+                userType = rs.getString(SQLHelper.Columns.USERTYPE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return userType;
     }
 }

@@ -39,6 +39,7 @@ public class AjaxLoginServlet extends HttpServlet {
         if (User.validate(userid, passwd)) {
             HttpSession session = req.getSession();
             session.setAttribute(Tags.TAG_USERID, userid);
+            session.setAttribute(Tags.TAG_USERTYPE, User.getUserType(userid));
             response = new Success(null);
         } else {
             response = new Failure("用户名或密码错误");
