@@ -13,11 +13,11 @@ import javax.servlet.jsp.PageContext;
 import java.io.IOException;
 
 public class MainServlet extends HttpServlet {
-    SQLHelper SQLHelper;
+    SQLHelper helper;
 
     @Override
     public void init() throws ServletException {
-        SQLHelper = SQLHelper.getInstance();
+        helper = SQLHelper.getInstance();
     }
 
     @Override

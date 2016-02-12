@@ -1,6 +1,7 @@
 package fitm.util;
 
 import fitm.model.HomeworkPost;
+import fitm.model.User;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -44,6 +45,10 @@ public class SQLHelper {
     final public static String TABLE_COURSE_CLASS = "COURSE_CLASS";
     final public static String TABLE_CLASS_STUDENT = "CLASS_STUDENT";
     final public static String TABLE_HOMEWORK_POST = "HOMEWORK_POST";
+    final public static int USERTYPE_ADMINISTRATOR = 0;
+    final public static int USERTYPE_TEACHER = 1;
+    final public static int USERTYPE_STUDENT = 2;
+
     public interface Columns {
         final static String USER_ID                 = "user_id";
         final static String PASSWORD                = "password";
@@ -171,5 +176,51 @@ public class SQLHelper {
         }
 
         return true;
+    }
+
+    public static User getUserById(String userid) throws ServletException {
+        SQLHelper helper = SQLHelper.getInstance();
+        String selection = SQLHelper.Columns.USER_ID + "=? ";
+        String[] selectionArgs = {userid};
+        User user = null;
+
+        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    user = new User(userid,
+                            rs.getString(SQLHelper.Columns.REALNAME),
+                            rs.getInt(SQLHelper.Columns.USERTYPE));
+                }
+            } catch(SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return user;
+    }
+
+    public static boolean validate(String userid, String password) throws ServletException {
+        boolean flag = false;
+        SQLHelper helper = SQLHelper.getInstance();
+        String selection = SQLHelper.Columns.USER_ID + "=? ";
+        String[] selectionArgs = {userid};
+        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
+                        flag = true;
+                        Utils.setCurrentUser(new User(
+                                userid,
+                                rs.getString(SQLHelper.Columns.REALNAME),
+                                rs.getInt(SQLHelper.Columns.USERTYPE)
+                        ));
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return flag;
     }
 }

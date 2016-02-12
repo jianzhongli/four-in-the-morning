@@ -10,28 +10,26 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class User {
-    private Long id;
+    private String id;
     private String name;
+    private int userType;
 
-    public User(Long id, String name) {
+    public User(String id, String name, int userType) {
         this.id = id;
         this.name = name;
+        this.userType = userType;
     }
 
-    public Long getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public int getUserType() {
+        return userType;
     }
 
     public static boolean validate(String userid, String password) throws ServletException {
@@ -45,14 +43,17 @@ public class User {
                 while (rs.next()) {
                     if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
                         flag = true;
-                        Utils.setCurrentUser(new User(new Long(userid), rs.getString(SQLHelper.Columns.REALNAME)));
+                        Utils.setCurrentUser(new User(
+                                userid,
+                                rs.getString(SQLHelper.Columns.REALNAME),
+                                rs.getInt(SQLHelper.Columns.USERTYPE)
+                        ));
                     }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
         return flag;
     }
 }

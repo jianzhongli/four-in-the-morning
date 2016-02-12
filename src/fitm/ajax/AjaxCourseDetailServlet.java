@@ -1,7 +1,6 @@
 package fitm.ajax;
 
 import fitm.model.Course;
-import fitm.util.SQLHelper;
 import fitm.util.Tags;
 import fitm.util.Utils;
 
@@ -12,16 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 
-public class AjaxCoursesServlet extends HttpServlet {
-    SQLHelper helper;
-
-    @Override
-    public void init() throws ServletException {
-        helper = SQLHelper.getInstance();
-    }
-
+public class AjaxCourseDetailServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
@@ -29,17 +20,18 @@ public class AjaxCoursesServlet extends HttpServlet {
         Response response;
 
         if (Utils.hasLogin(req)) {
-            HttpSession session = req.getSession();
-            String userid  = session.getAttribute(Tags.TAG_USERID).toString();
-            response = new Success(Course.getCoursesList(userid));
+            String[] pathItems = req.getRequestURI().split("[/]");
+            String courseId = pathItems[pathItems.length-1];
+            Course course = Course.getCourseDetail(courseId, Utils.getCurrentUser(req));
+            if (course != null) {
+                response = new Success(course);
+            } else {
+                response = new Failure("课程不存在。");
+            }
         } else {
             response = new Failure("用户未登录。");
         }
-        writer.write(Utils.getGson().toJson(response));
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        writer.write(Utils.getGson().toJson(response));
     }
 }

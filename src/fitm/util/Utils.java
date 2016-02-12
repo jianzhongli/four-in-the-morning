@@ -30,6 +30,11 @@ public class Utils {
     }
 
     public static User getCurrentUser(HttpServletRequest req) throws ServletException {
+        if (Utils.hasLogin(req) && currentUser == null) {
+            String userid = req.getSession().getAttribute(Tags.TAG_USERID).toString();
+            currentUser = SQLHelper.getUserById(userid);
+        }
+
         return currentUser;
     }
 

@@ -1,9 +1,7 @@
 package fitm.model;
 
 public class Teacher extends User {
-    public Teacher(Long id, String name) {
-        super(id, name);
+    public Teacher(String id, String name, int userType) {
+        super(id, name, userType);
     }
-
-
 }
