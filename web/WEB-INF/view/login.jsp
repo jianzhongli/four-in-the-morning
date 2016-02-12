@@ -19,7 +19,7 @@
         <title>登录</title>
     </head>
 
-    <body class="grey lighten-4">
+    <body class="grey lighten-5">
         <div class="container valign-wrapper">
             <div class="card valign">
                 <div class="card-content">

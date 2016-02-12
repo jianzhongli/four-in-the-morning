@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 
 public class Utils {
     private static Gson gson;
+    private static User currentUser;
 
     // private constructor to prevent instantiation
     private Utils() {}
@@ -29,26 +30,11 @@ public class Utils {
     }
 
     public static User getCurrentUser(HttpServletRequest req) throws ServletException {
-        User user = null;
-        HttpSession session = req.getSession();
-        if (session.getAttribute(Tags.TAG_USERID) != null) {
-            String userid  = session.getAttribute(Tags.TAG_USERID).toString();
-            SQLHelper helper = SQLHelper.getInstance();
-            String selection = SQLHelper.Columns.USER_ID + "=? ";
-            String[] selectionArgs = {userid};
-            ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
-            try {
-                while (rs.next()) {
-                    user = new User(
-                            rs.getLong(SQLHelper.Columns.USER_ID),
-                            rs.getString(SQLHelper.Columns.REALNAME));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
+        return currentUser;
+    }
 
-        return user;
+    public static void setCurrentUser(User currentUser) {
+        Utils.currentUser = currentUser;
     }
 
     public static Gson getGson() {

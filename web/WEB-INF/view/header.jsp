@@ -26,6 +26,6 @@
 </nav>
 <!-- Dropdown Structure -->
 <ul id="dropdown-main" class="dropdown-content">
-    <li><a href="">修改密码</a></li>
+    <li><a href="/edit_password">修改密码</a></li>
     <li><a onclick="logout()">退出</a></li>
 </ul>

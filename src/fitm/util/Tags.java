@@ -3,6 +3,7 @@ package fitm.util;
 public interface Tags {
     final static String TAG_USERID = "userid";
     final static String TAG_PASSWORD = "password";
+    final static String TAG_OLD_PASSWORD = "old-password";
     final static String TAG_REALNAME = "realname";
     final static String TAG_COURSE_ID = "course_id";
     final static String TAG_HOMEWORK_TITLE = "homework_title";

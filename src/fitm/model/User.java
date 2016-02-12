@@ -1,6 +1,7 @@
 package fitm.model;
 
 import fitm.util.SQLHelper;
+import fitm.util.Utils;
 
 import javax.servlet.ServletException;
 import java.sql.ResultSet;
@@ -36,18 +37,20 @@ public class User {
     public static boolean validate(String userid, String password) throws ServletException {
         boolean flag = false;
         SQLHelper helper = SQLHelper.getInstance();
-        String[] columns = {SQLHelper.Columns.PASSWORD};
         String selection = SQLHelper.Columns.USER_ID + "=? ";
         String[] selectionArgs = {userid};
-        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, columns, selection, selectionArgs, null);
-        try {
-            while (rs.next()) {
-                if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
-                    flag = true;
+        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
+                        flag = true;
+                        Utils.setCurrentUser(new User(new Long(userid), rs.getString(SQLHelper.Columns.REALNAME)));
+                    }
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return flag;
