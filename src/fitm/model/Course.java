@@ -70,26 +70,40 @@ public class Course {
     public static ArrayList<Course> getCoursesList(String userid) throws ServletException {
         ArrayList<Course> courseArrayList = new ArrayList<>();
         SQLHelper helper = SQLHelper.getInstance();
+        User user = SQLHelper.getUserById(userid);
 
-        String sql = String.format("SELECT * FROM %s WHERE %s IN " +
-                "(SELECT %s FROM %s WHERE %s IN " +
-                    "(SELECT %s FROM %s WHERE %s = '%s'));",
-                SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
-                SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.CLASS_ID,
-                SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID, userid
-        );
-        ResultSet rs = helper.executeQuery(sql);
-        try {
-            while (rs.next()) {
-                String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
-                String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
-                Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
-                Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
-                courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, null));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        String sql = "";
+        if (user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
+            sql = String.format("SELECT * FROM %s WHERE %s IN " +
+                            "(SELECT %s FROM %s WHERE %s IN " +
+                            "(SELECT %s FROM %s WHERE %s = '%s'));",
+                    SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
+                    SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.CLASS_ID,
+                    SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID, userid
+            );
+
+        } else if (user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
+            sql = String.format("SELECT * FROM %s WHERE %s IN " +
+                            "(SELECT %s FROM %s WHERE %s = '%s');",
+                    SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
+                    SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.TEACHER_ID, userid
+            );
         }
+        ResultSet rs = helper.executeQuery(sql);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
+                    String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
+                    Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
+                    Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+                    courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, null));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
         return courseArrayList;
     }
 

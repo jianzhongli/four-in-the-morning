@@ -1,14 +1,12 @@
 package fitm.ajax;
 
 import fitm.model.Course;
-import fitm.util.Tags;
 import fitm.util.Utils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 

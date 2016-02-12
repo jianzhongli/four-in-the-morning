@@ -10,8 +10,7 @@ function login() {
             if (xhttp.readyState == 4 && xhttp.status == 200) {
                 var obj = JSON.parse(xhttp.responseText);
                 if (!obj.success) {
-                    //Materialize.toast('用户名或密码错误', 2000);
-                    // TODO: 提示用户名或密码错误
+                    Materialize.toast('用户名或密码错误', 2000);
                 } else { // 如果登录成功，重定向至用户个人主页
                     window.location.href = '/';
                 }
