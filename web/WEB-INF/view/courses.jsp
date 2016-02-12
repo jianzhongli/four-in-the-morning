@@ -18,37 +18,23 @@
                 <h5>我的课程</h5>
                 <div class="divider"></div>
                 <div class="row">
-                    <div class="col l4">
-                        <div class="card hoverable">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    计算机语言及其处理
+                    <c:forEach items="${course_list}" var="course">
+                        <div class="col l4">
+                            <div class="card hoverable">
+                                <div class="card-content">
+                                    <div class="card-title">
+                                        ${course.course_name}
+                                    </div>
+                                    <p>
+                                        教师姓名（待补充）
+                                    </p>
                                 </div>
-                                <p>
-                                    Eun Young Kang
-                                </p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">查看详情</a>
+                                <div class="card-action">
+                                    <a href="/courses/${course.course_id}">查看详情</a>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col l4">
-                        <div class="card hoverable">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    数据仓库与数据挖掘
-                                </div>
-                                <p>
-                                    王昌栋
-                                </p>
-                            </div>
-
-                            <div class="card-action">
-                                <a href="#">查看详情</a>
-                            </div>
-                        </div>
-                    </div>
+                    </c:forEach>
                 </div>
             </div>
 

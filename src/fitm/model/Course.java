@@ -110,7 +110,8 @@ public class Course {
     public static Course getCourseDetail(String courseid, User user) throws ServletException {
         Course courseDetail = null;
         SQLHelper helper = SQLHelper.getInstance();
-        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'", SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID, courseid);
+        String sql = String.format("SELECT * FROM %s WHERE %s = '%s'",
+                SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID, courseid);
         ResultSet rs = helper.executeQuery(sql);
 
         try {
@@ -123,6 +124,7 @@ public class Course {
                 switch (user.getUserType()) {
                     case SQLHelper.USERTYPE_STUDENT: {
                         courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, null);
+                        break;
                     }
                     case SQLHelper.USERTYPE_TEACHER: {
                         ArrayList<Class> classes = Class.getClassesList(courseid, user);

@@ -16,11 +16,12 @@
 <div class="container">
     <div class="row">
         <div class="col l8">
-            <h4>SMIE 2015 Artificial Intelligence Course</h4>
+            <h4>${course.course_name}</h4>
             <div class="section">
                 <h5>Introdution</h5>
                 <div class="divider"></div>
                 <blockquote>
+                    这些是假的。
                     Artificial Intelligence is the science of getting computers to act without being explicitly programmed. This course provides a fundamental overview of artificial intelligence, machine learning and data mining, as well as in-depth discussions and applications on learning algorithms. The topics include propositional logic, first-order predicate logic, k-nearest neighbor, naїve Bayesian classifier, decision tree, perceptron learning algorithm, least squares for classification, logistic regression, neural networks, support vector machines, association rule mining, partitional and hierarchical clustering, density-based clustering, in addition to typical practices, case studies and applications. Students are expected to learn how to apply learning algorithms to text understanding, computer vision, medical informatics, database mining, and other areas.
                 </blockquote>
             </div>
@@ -28,15 +29,18 @@
                 <h5>Instructor</h5>
                 <div class="divider"></div>
                 <p>
-                    A/Prof. Yanghui Rao
+                    A/Prof. Yanghui Rao这些是假的。
                 </p>
                 <p>
+                    这些是假的。
                     Office: Room 409, 4th floor of Administrative Building, Sun Yat-sen University Zhuhai Campus
                 </p>
                 <p>
+                    这些是假的。
                     Homepage : http://smie2.sysu.edu.cn/~ryh/ai/index.html
                 </p>
                 <p>
+                    这些是假的。
                     Email : raoyangh@mail.sysu.edu.cn
                 </p>
             </div>
