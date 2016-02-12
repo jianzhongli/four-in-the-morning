@@ -40,6 +40,10 @@ public class SQLHelper {
     final public static String TABLE_COURSE = "[dbo].[COURSE]";
     final public static String TABLE_COURSE_CLASS = "[dbo].[COURSE_CLASS]";
     final public static String TABLE_CLASS_STUDENT = "[dbo].[CLASS_STUDENT]";
+    final public static String USERTYPE_ADMINISTRATOR = "0";
+    final public static String USERTYPE_TEACHER = "1";
+    final public static String USERTYPE_STUDENT = "2";
+
     public interface Columns {
         final static String USER_ID                 = "user_id";
         final static String PASSWORD                = "password";
