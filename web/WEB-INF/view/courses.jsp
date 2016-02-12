@@ -19,7 +19,7 @@
                 <div class="divider"></div>
                 <div class="row">
                     <c:forEach items="${course_list}" var="course">
-                        <div class="col l4">
+                        <div class="col">
                             <div class="card hoverable">
                                 <div class="card-content">
                                     <div class="card-title">
@@ -42,7 +42,7 @@
                 <h5>助教课程</h5>
                 <div class="divider"></div>
                 <div class="row">
-                    <div class="col l4">
+                    <div class="col">
                         <div class="card hoverable">
                             <div class="card-content">
                                 <div class="card-title">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col l3">
+                    <div class="col">
                         <div class="card hoverable">
                             <div class="card-content">
                                 <div class="card-title">
@@ -72,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col l5">
+                    <div class="col">
                         <div class="card hoverable">
                             <div class="card-content">
                                 <div class="card-title">
