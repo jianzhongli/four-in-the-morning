@@ -51,7 +51,7 @@ public class AjaxPostHomeworkServlet extends HttpServlet {
 
             HomeworkPost homeworkPost =
                     new HomeworkPost(course_id, homework_id, homework_title, homework_description, attach_file, post_date, ddl);
-            if (SQLHelper.getInstance().insertHomeworkPost(homeworkPost)) {
+            if (HomeworkPost.insertHomeworkPost(homeworkPost)) {
                 response = new Success(homeworkPost);
             } else {
                 response = new Failure("数据库错误。");
