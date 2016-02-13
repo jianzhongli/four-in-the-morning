@@ -70,7 +70,7 @@ public class Course {
     public static ArrayList<Course> getCoursesList(String userid) throws ServletException {
         ArrayList<Course> courseArrayList = new ArrayList<>();
         SQLHelper helper = SQLHelper.getInstance();
-        User user = SQLHelper.getUserById(userid);
+        User user = User.getUserById(userid);
 
         String sql = "";
         if (user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
@@ -101,6 +101,12 @@ public class Course {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                try {
+                    helper.closeResultSet(rs);
+                } catch (SQLException ex) {
+                    Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
 
@@ -132,6 +138,12 @@ public class Course {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                helper.closeResultSet(rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return courseDetail;
     }

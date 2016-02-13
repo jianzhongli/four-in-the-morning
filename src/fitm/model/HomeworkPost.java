@@ -1,5 +1,9 @@
 package fitm.model;
 
+import fitm.util.SQLHelper;
+import fitm.util.Utils;
+
+import javax.servlet.ServletException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -48,5 +52,26 @@ public class HomeworkPost {
 
     public Date getDdl() {
         return ddl;
+    }
+
+    public static boolean insertHomeworkPost(HomeworkPost homeworkPost) throws ServletException {
+        boolean flag = false;
+        String sql = String.format(
+                "INSERT INTO %s VALUES (%s %s %s %s %s %s %s)",
+                SQLHelper.TABLE_HOMEWORK_POST,
+                homeworkPost.getCourse_id(),
+                homeworkPost.getHomework_id(),
+                homeworkPost.getHomework_title(),
+                homeworkPost.getHoemwork_description(),
+                homeworkPost.getAttatch_file(),
+                homeworkPost.getPost_date(),
+                homeworkPost.getDdl()
+        );
+        SQLHelper helper = SQLHelper.getInstance();
+        if (helper.executeUpdate(sql) >= 0) {
+            flag = true;
+        }
+
+        return flag;
     }
 }

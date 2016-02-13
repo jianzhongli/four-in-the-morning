@@ -145,9 +145,8 @@ public class SQLHelper {
     }
 
     public int executeUpdate(String sql) {
-        ResultSet rs = null;
-        Connection conn;
-        Statement stat;
+        Connection conn = null;
+        Statement stat = null;
         int ret = -1;
         try {
             conn = pool.getConnection();
@@ -155,72 +154,27 @@ public class SQLHelper {
             ret = stat.executeUpdate(sql);
         } catch (SQLException ex) {
             Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                if (stat != null) {
+                    stat.close();
+                }
+                if (conn != null) {
+                    conn.close();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return ret;
     }
 
-    public boolean insertHomeworkPost(HomeworkPost homeworkPost) {
-        String sql = String.format(
-                "INSERT INTO %s VALUES (%s %s %s %s %s %s %s)",
-                TABLE_HOMEWORK_POST,
-                homeworkPost.getCourse_id(),
-                homeworkPost.getHomework_id(),
-                homeworkPost.getHomework_title(),
-                homeworkPost.getHoemwork_description(),
-                homeworkPost.getAttatch_file(),
-                homeworkPost.getPost_date(),
-                homeworkPost.getDdl()
-        );
-        if (executeUpdate(sql) >= 0) {
-            return true;
-        }
-
-        return true;
+    public void closeResultSet(ResultSet rs) throws SQLException {
+        Statement stat = rs.getStatement();
+        Connection conn = stat.getConnection();
+        rs.close();
+        stat.close();
+        conn.close();
     }
 
-    public static User getUserById(String userid) throws ServletException {
-        SQLHelper helper = SQLHelper.getInstance();
-        String selection = SQLHelper.Columns.USER_ID + "=? ";
-        String[] selectionArgs = {userid};
-        User user = null;
-
-        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    user = new User(userid,
-                            rs.getString(SQLHelper.Columns.REALNAME),
-                            rs.getInt(SQLHelper.Columns.USERTYPE));
-                }
-            } catch(SQLException ex) {
-                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return user;
-    }
-
-    public static boolean validate(String userid, String password) throws ServletException {
-        boolean flag = false;
-        SQLHelper helper = SQLHelper.getInstance();
-        String selection = SQLHelper.Columns.USER_ID + "=? ";
-        String[] selectionArgs = {userid};
-        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
-                        flag = true;
-                        Utils.setCurrentUser(new User(
-                                userid,
-                                rs.getString(SQLHelper.Columns.REALNAME),
-                                rs.getInt(SQLHelper.Columns.USERTYPE)
-                        ));
-                    }
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return flag;
-    }
 }
