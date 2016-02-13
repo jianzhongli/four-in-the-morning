@@ -148,12 +148,12 @@ public class Course {
 
                     switch (user.getUserType()) {
                         case SQLHelper.USERTYPE_STUDENT: {
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher("123", "Teacher", 1), null);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, Student.getMyCourseTeacher(courseId, user.getId()), null);
                             break;
                         }
                         case SQLHelper.USERTYPE_TEACHER: {
                             ArrayList<Class> classes = Class.getClassesList(courseid, user);
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher("123", "Teacher", 1), classes);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user.getId(), user.getName(), user.getUserType()), classes);
                         }
                     }
                 }
