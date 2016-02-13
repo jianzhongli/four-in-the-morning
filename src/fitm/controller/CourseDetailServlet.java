@@ -30,7 +30,7 @@ public class CourseDetailServlet extends HttpServlet {
                 req.setAttribute(Tags.TAG_HOMEWORK_LIST, homeworkPostArrayList);
                 req.getRequestDispatcher(Path.COURSE_DETAIL).forward(req, resp);
             } else {
-                resp.setStatus(404);
+                resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);

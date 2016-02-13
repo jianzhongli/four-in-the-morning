@@ -1,6 +1,7 @@
 package fitm.ajax;
 
 import fitm.model.Course;
+import fitm.model.User;
 import fitm.util.SQLHelper;
 import fitm.util.Tags;
 import fitm.util.Utils;
@@ -26,12 +27,11 @@ public class AjaxCoursesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
+        User user = Utils.getCurrentUser(req);
         Response response;
 
-        if (Utils.hasLogin(req)) {
-            HttpSession session = req.getSession();
-            String userid  = session.getAttribute(Tags.TAG_USERID).toString();
-            response = new Success(Course.getCoursesList(userid));
+        if (user != null) {
+            response = new Success(Course.getCoursesList(user.getId()));
         } else {
             response = new Failure("用户未登录。");
         }
