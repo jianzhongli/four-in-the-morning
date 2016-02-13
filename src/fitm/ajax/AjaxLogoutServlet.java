@@ -17,7 +17,6 @@ public class AjaxLogoutServlet extends HttpServlet {
         Response response = new Success(null);
         try {
             req.getSession().invalidate();
-            Utils.setCurrentUser(null);
         } catch (IllegalStateException ex) { // when this session is already invalidated
             response = new Failure("Session 已过期。");
         } finally {

@@ -20,3 +20,8 @@
     -webkit-font-feature-settings: 'liga';
     -webkit-font-smoothing: antialiased;
 }
+
+/*for tabs in course-detail.jsp*/
+ul.tabs {
+    overflow-x: hidden;
+}

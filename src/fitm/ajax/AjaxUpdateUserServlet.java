@@ -32,7 +32,7 @@ public class AjaxUpdateUserServlet extends HttpServlet {
             String userid  = session.getAttribute(Tags.TAG_USERID).toString();
             String old_password = req.getParameter(Tags.TAG_OLD_PASSWORD);
             String new_password = req.getParameter(Tags.TAG_PASSWORD);
-            if (User.validate(userid, old_password)) {
+            if (User.validate(userid, old_password) != null) {
                 if (SQLHelper.getInstance().executeUpdate(String.format(
                         "UPDATE %s SET %s='%s' WHERE %s='%s'",
                         SQLHelper.TABLE_USER_WEB, SQLHelper.Columns.PASSWORD, new_password,

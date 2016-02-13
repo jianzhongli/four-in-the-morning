@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="org.apache.directory.studio:org.apache.commons.io:2.4" type="repository">
+    <properties maven-id="org.apache.directory.studio:org.apache.commons.io:2.4" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../../four-in-the-morning/web/WEB-INF/lib/org.apache.commons.io-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../four-in-the-morning/web/WEB-INF/lib/commons-io-2.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../../four-in-the-morning/web/WEB-INF/lib/annotations-1.0.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

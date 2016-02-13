@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.tagext.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -22,12 +23,6 @@ public class AjaxLoginServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PrintWriter writer = resp.getWriter();
-        writer.write(req.getRequestURI());
-    }
-
-    @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
@@ -35,10 +30,10 @@ public class AjaxLoginServlet extends HttpServlet {
 
         String userid = req.getParameter(Tags.TAG_USERID);
         String passwd = req.getParameter(Tags.TAG_PASSWORD);
+        User user = User.validate(userid, passwd);
 
-        if (User.validate(userid, passwd)) {
-            HttpSession session = req.getSession();
-            session.setAttribute(Tags.TAG_USERID, userid);
+        if (user != null) {
+            req.getSession().setAttribute(Tags.TAG_USER, user);
             response = new Success(null);
         } else {
             response = new Failure("用户名或密码错误");
