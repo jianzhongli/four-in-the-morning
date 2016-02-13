@@ -39,4 +39,32 @@ public class Student extends User {
         }
         return studentArrayList;
     }
+
+    public static Teacher getMyCourseTeacher(String courseId, String userid) throws ServletException {
+        Teacher myTeacher = null;
+        String sql = String.format("SELECT %s FROM %s WHERE %s = '%s' AND %s IN (SELECT %s FROM %s WHERE %s = '%s');",
+                SQLHelper.Columns.TEACHER_ID, SQLHelper.TABLE_COURSE_CLASS,
+                SQLHelper.Columns.COURSE_ID, courseId,
+                SQLHelper.Columns.CLASS_ID, SQLHelper.Columns.CLASS_ID,
+                SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID,
+                userid);
+        SQLHelper helper = SQLHelper.getInstance();
+        ResultSet rs = helper.executeQuery(sql);
+        try {
+                while( rs.next()) {
+                    String teacher_id = rs.getString(SQLHelper.Columns.TEACHER_ID);
+                    User teacher_user = User.getUserById(teacher_id);
+                    myTeacher = new Teacher(teacher_user.getId(), teacher_user.getName(), teacher_user.getUserType());
+                }
+        } catch (SQLException ex) {
+                Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                helper.closeResultSet(rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return myTeacher;
+    }
 }
