@@ -26,7 +26,7 @@
                                         ${course.course_name}
                                     </div>
                                     <p>
-                                        教师姓名（待补充）
+                                        教师姓名: ${course.teacher.name}
                                     </p>
                                 </div>
                                 <div class="card-action">
