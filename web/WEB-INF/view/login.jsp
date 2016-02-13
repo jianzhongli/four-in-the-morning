@@ -31,7 +31,7 @@
                     </div>
                     <div class="row">
                         <div class="input-field col s12">
-                            <input id="password" type="password">
+                            <input id="password" type="password" onkeydown="keyDown()">
                             <label for="password">密码</label>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
         </div>
 
         <!--Import jQuery before materialize.js-->
-        <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="../../js/materialize.min.js"></script>
         <script src="../../js/login.js" type="application/javascript"></script>
     </body>

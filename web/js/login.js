@@ -19,6 +19,12 @@ function login() {
     }
 }
 
+function keyDown() {
+    if (event.keyCode == 13) { // 回车键键盘响应
+        login();
+    }
+}
+
 // TODO: 利用 API 帮助重设密码
 function reset_password() {
 

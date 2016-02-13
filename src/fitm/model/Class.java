@@ -54,6 +54,12 @@ public class Class {
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                helper.closeResultSet(rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         return classeArrayList;
     }
