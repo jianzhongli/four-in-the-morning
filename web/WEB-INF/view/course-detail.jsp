@@ -10,14 +10,14 @@
     <title>凌晨四点线上作业提交系统</title>
 </head>
 
-<body>
+<body class="grey lighten-5">
 <jsp:include page="header.jsp" />
 
 <div class="container">
     <div class="section">
         <div class="row">
             <div class="col s12">
-                <ul class="tabs">
+                <ul class="tabs grey lighten-5">
                     <li class="tab col s3"><a class="active" href="#overview">课程总览</a></li>
                     <li class="tab col s3"><a href="#slides">课件下载</a></li>
                     <li class="tab col s3"><a href="#homework">查看作业</a></li>
@@ -91,43 +91,60 @@
     <%--作业情况--%>
     <div class="row">
         <div class="col s12 l10 offset-l1" id="homework">
-            <div class="card">
-                <div class="card-content">
-                    <div class="card-title"><h4>发布作业</h4></div>
-                    <form enctype="multipart/form-data">
-                        <input id="course-id" type="hidden" value="${course.getCourse_id()}"></input>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <input id="homework_title" type="text">
-                                <label for="homework_title">作业标题</label>
+            <c:if test="${homework_list.size() > 0}">
+                <ul class="collapsible z-depth-0" data-collapsible="expandable">
+                    <c:forEach var="homework" items="${homework_list}">
+                        <li>
+                            <div class="collapsible-header">
+                                    ${homework.getHomework_title()}
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s12">
-                                <textarea id="homework_description" class="materialize-textarea"></textarea>
-                                <label for="homework_description">作业描述</label>
+                            <div class="collapsible-body">
+                                <p>${homework.getHomework_description()}</p>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="input-field col s5">
-                                <input type="date" class="datepicker" id="ddl">
-                                <label for="ddl">点击选择期限</label>
-                            </div>
-                            <div class="file-field input-field col s7">
-                                <div class="btn">
-                                    <span>附件</span>
-                                    <input id="attach_file" type="file">
-                                </div>
-                                <div class="file-path-wrapper">
-                                    <input class="file-path validate" type="text">
+                        </li>
+                    </c:forEach>
+                </ul>
+            </c:if>
+
+            <c:if test="${user.getUserType() < 2}">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-title"><h4>发布作业</h4></div>
+                        <form enctype="multipart/form-data">
+                            <input id="course-id" type="hidden" value="${course.getCourse_id()}"></input>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="homework_title" type="text">
+                                    <label for="homework_title">作业标题</label>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                    <a class="btn waves-effect waves-light" onclick="post_homework()">提交</a>
-                    <a class="btn-flat waves-effect waves-ripple">取消</a>
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <textarea id="homework_description" class="materialize-textarea"></textarea>
+                                    <label for="homework_description">作业描述</label>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="input-field col s5">
+                                    <input type="date" class="datepicker" id="ddl">
+                                    <label for="ddl">点击选择期限</label>
+                                </div>
+                                <div class="file-field input-field col s7">
+                                    <div class="btn">
+                                        <span>附件</span>
+                                        <input id="attach_file" type="file">
+                                    </div>
+                                    <div class="file-path-wrapper">
+                                        <input class="file-path validate" type="text">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <a class="btn waves-effect waves-light" onclick="post_homework()">提交</a>
+                        <a class="btn-flat waves-effect waves-ripple">取消</a>
+                    </div>
                 </div>
-            </div>
+            </c:if>
         </div>
     </div>
 

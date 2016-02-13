@@ -2,14 +2,16 @@ function post_homework() {
     var course_id = document.getElementById("course-id").value;
     var homework_title = document.getElementById("homework_title").value;
     var homework_description = document.getElementById("homework_description").value;
-    var ddl = document.getElementById("ddl").value;
+    var ddl = new Date(document.getElementById("ddl").value).valueOf()
 
     var formData = new FormData();
     formData.append("course_id", course_id);
     formData.append("homework_title", homework_title);
     formData.append("homework_description", homework_description);
-    formData.append("post_date", new Date());
+    formData.append("post_date", new Date().valueOf());
     formData.append("ddl", ddl);
+
+
     //formData.append("attach_file", document.getElementById("attach_file").files[0]);
 
     xhttp = new XMLHttpRequest();
