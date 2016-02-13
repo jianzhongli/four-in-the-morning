@@ -16,16 +16,16 @@ public class HomeworkPost {
     private String homework_id;
     private String homework_title;
     private String homework_description;
-    private String attatch_file;
+    private String attach_file;
     private Date post_date;
     private Date ddl;
 
-    public HomeworkPost(String course_id, String homework_id, String homework_title, String homework_description, String attatch_file, Date post_date, Date ddl) {
+    public HomeworkPost(String course_id, String homework_id, String homework_title, String homework_description, String attach_file, Date post_date, Date ddl) {
         this.course_id = course_id;
         this.homework_id = homework_id;
         this.homework_title = homework_title;
         this.homework_description = homework_description;
-        this.attatch_file = attatch_file;
+        this.attach_file = attach_file;
         this.post_date = post_date;
         this.ddl = ddl;
     }
@@ -46,8 +46,8 @@ public class HomeworkPost {
         return homework_description;
     }
 
-    public String getAttatch_file() {
-        return attatch_file;
+    public String getAttach_file() {
+        return attach_file;
     }
 
     public Date getPost_date() {
@@ -76,11 +76,9 @@ public class HomeworkPost {
             pstmt.setString(2, homeworkPost.getHomework_id());
             pstmt.setString(3, homeworkPost.getHomework_title());
             pstmt.setString(4, homeworkPost.getHomework_description());
-            pstmt.setString(5, homeworkPost.getAttatch_file());
+            pstmt.setString(5, homeworkPost.getAttach_file());
             pstmt.setDate(6, homeworkPost.getPost_date());
             pstmt.setDate(7, homeworkPost.getDdl());
-
-            System.out.println(homeworkPost.getHomework_title());
 
             if (pstmt.executeUpdate() >= 0) {
                 flag = true;

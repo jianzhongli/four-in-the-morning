@@ -14,6 +14,10 @@ public class Student extends User {
         super(id, name, userType);
     }
 
+    public Student(User user) {
+        super(user);
+    }
+
     public static ArrayList<Student> getStudentsList(String classid) throws ServletException {
         //SELECT * FROM USER_WEB WHERE user_id IN (SELECT student_id FROM CLASS_STUDENT WHERE class_id = '46000071153001';
         ArrayList<Student> studentArrayList = new ArrayList<>();
@@ -53,8 +57,7 @@ public class Student extends User {
         try {
                 while( rs.next()) {
                     String teacher_id = rs.getString(SQLHelper.Columns.TEACHER_ID);
-                    User teacher_user = User.getUserById(teacher_id);
-                    myTeacher = new Teacher(teacher_user.getId(), teacher_user.getName(), teacher_user.getUserType());
+                    myTeacher = new Teacher(User.getUserById(teacher_id));
                 }
         } catch (SQLException ex) {
                 Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);

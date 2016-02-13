@@ -112,7 +112,7 @@ public class Course {
                     if(user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
                         teacher = Student.getMyCourseTeacher(courseId, userid);
                     } else if(user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
-                        teacher = new Teacher(user.getId(), user.getName(), user.getUserType());
+                        teacher = new Teacher(user);
                     }
 
                     courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, teacher, null));
@@ -153,7 +153,7 @@ public class Course {
                         }
                         case SQLHelper.USERTYPE_TEACHER: {
                             ArrayList<Class> classes = Class.getClassesList(courseid, user);
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user.getId(), user.getName(), user.getUserType()), classes);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user), classes);
                         }
                     }
                 }
