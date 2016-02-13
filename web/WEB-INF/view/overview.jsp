@@ -19,7 +19,7 @@
                     <div class="section">
                         <h5>最新动态</h5>
                         <div class="divider"></div>
-                        <h6>${realname} 43 分钟前 发布了作业</h6>
+                        <h6>${user.getName()} 43 分钟前 发布了作业</h6>
 
                         <div class="progress">
                             <div class="determinate" style="width: 70%"></div>

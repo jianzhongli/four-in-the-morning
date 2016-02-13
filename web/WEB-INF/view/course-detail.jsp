@@ -14,9 +14,28 @@
 <jsp:include page="header.jsp" />
 
 <div class="container">
-    <div class="row">
-        <div class="col l8">
-            <h4>${course.course_name}</h4>
+    <div class="section">
+        <div class="row">
+            <div class="col s12">
+                <ul class="tabs">
+                    <li class="tab col s3"><a class="active" href="#overview">课程总览</a></li>
+                    <li class="tab col s3"><a href="#slides">课件下载</a></li>
+                    <li class="tab col s3"><a href="#homework">查看作业</a></li>
+                    <c:if test="${user.getUserType() < 2}">
+                        <li class="tab col s3"><a href="#students">学生列表</a></li>
+                    </c:if>
+                </ul>
+                <div class="divider"></div>
+            </div>
+        </div>
+    </div>
+
+    <%--TODO：在数据库里补充相关字段--%>
+    <div class="row" >
+        <div class="col s12" id="overview">
+            <div class="section">
+                <h4>${course.getCourse_name()}</h4>
+            </div>
             <div class="section">
                 <h5>Introdution</h5>
                 <div class="divider"></div>
@@ -59,10 +78,91 @@
             </div>
         </div>
     </div>
+
+    <%--课件下载 TODO: 在数据库里补充这一部分--%>
+    <div class="row">
+        <div class="col s12" id="slides">
+            <div class="row">
+                待补充。
+            </div>
+        </div>
+    </div>
+
+    <%--作业情况--%>
+    <div class="row">
+        <div class="col s12 l10 offset-l1" id="homework">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-title"><h4>发布作业</h4></div>
+                    <form enctype="multipart/form-data">
+                        <input id="course-id" type="hidden" value="${course.getCourse_id()}"></input>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="homework_title" type="text">
+                                <label for="homework_title">作业标题</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="homework_description" class="materialize-textarea"></textarea>
+                                <label for="homework_description">作业描述</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s5">
+                                <input type="date" class="datepicker" id="ddl">
+                                <label for="ddl">点击选择期限</label>
+                            </div>
+                            <div class="file-field input-field col s7">
+                                <div class="btn">
+                                    <span>附件</span>
+                                    <input id="attach_file" type="file">
+                                </div>
+                                <div class="file-path-wrapper">
+                                    <input class="file-path validate" type="text">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <a class="btn waves-effect waves-light" onclick="post_homework()">提交</a>
+                    <a class="btn-flat waves-effect waves-ripple">取消</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%--如果当前用户是老师，显示教学班列表--%>
+    <c:if test="${user.getUserType() < 2}">
+        <div class="row">
+            <div class="col s12" id="students">
+                <c:forEach var="teaching_class" items="${course.getClasses()}">
+                    <div class="section">
+                        <h5>${teaching_class.getClass_name()}</h5>
+                        <div class="divider"></div>
+                        <table class="highlight centered bordered">
+                            <thead>
+                            <tr>
+                                <th data-field="name">姓名</th>
+                                <th data-field="id">学号</th>
+                                <th data-field="email">邮箱</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <c:forEach var="student" items="${teaching_class.getStudents()}">
+                                    <tr><td>${student.getName()}</td><td>${student.getId()}</td><td>待添加邮箱</td></tr>
+                                </c:forEach>
+                            </tbody>
+                        </table>
+                    </div>
+                </c:forEach>
+            </div>
+        </div>
+    </c:if>
 </div>
 
 <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="../../js/materialize.min.js"></script>
 <script src="../../js/header.js" type="application/javascript"></script>
+<script src="../../js/course-detail.js" type="application/javascript"></script>
 </body>
 </html>

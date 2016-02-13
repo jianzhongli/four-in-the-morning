@@ -161,7 +161,7 @@ public class SQLHelper {
 
     public boolean insertHomeworkPost(HomeworkPost homeworkPost) {
         String sql = String.format(
-                "INSERT INTO %s VALUES (%s %s %s %s %s %s %s)",
+                "INSERT INTO %s VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')",
                 TABLE_HOMEWORK_POST,
                 homeworkPost.getCourse_id(),
                 homeworkPost.getHomework_id(),
@@ -175,7 +175,7 @@ public class SQLHelper {
             return true;
         }
 
-        return true;
+        return false;
     }
 
     public static User getUserById(String userid) throws ServletException {
@@ -197,30 +197,5 @@ public class SQLHelper {
             }
         }
         return user;
-    }
-
-    public static boolean validate(String userid, String password) throws ServletException {
-        boolean flag = false;
-        SQLHelper helper = SQLHelper.getInstance();
-        String selection = SQLHelper.Columns.USER_ID + "=? ";
-        String[] selectionArgs = {userid};
-        ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
-                        flag = true;
-                        Utils.setCurrentUser(new User(
-                                userid,
-                                rs.getString(SQLHelper.Columns.REALNAME),
-                                rs.getInt(SQLHelper.Columns.USERTYPE)
-                        ));
-                    }
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return flag;
     }
 }

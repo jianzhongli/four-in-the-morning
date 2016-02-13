@@ -15,7 +15,7 @@
 
         <div class="container">
             <div class="row">
-                <div class="col s8 offset-s2">
+                <div class="col s12 l8 offset-l2">
                     <div class="card">
                         <div class="card-content">
                             <div class="card-title"><h4>发布作业</h4></div>

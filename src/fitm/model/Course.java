@@ -114,26 +114,28 @@ public class Course {
                 SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID, courseid);
         ResultSet rs = helper.executeQuery(sql);
 
-        try {
-            while (rs.next()) {
-                String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
-                String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
-                Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
-                Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
+                    String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
+                    Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
+                    Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
 
-                switch (user.getUserType()) {
-                    case SQLHelper.USERTYPE_STUDENT: {
-                        courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, null);
-                        break;
-                    }
-                    case SQLHelper.USERTYPE_TEACHER: {
-                        ArrayList<Class> classes = Class.getClassesList(courseid, user);
-                        courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, classes);
+                    switch (user.getUserType()) {
+                        case SQLHelper.USERTYPE_STUDENT: {
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, null);
+                            break;
+                        }
+                        case SQLHelper.USERTYPE_TEACHER: {
+                            ArrayList<Class> classes = Class.getClassesList(courseid, user);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, classes);
+                        }
                     }
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
             }
-        } catch (SQLException ex) {
-            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
         }
         return courseDetail;
     }

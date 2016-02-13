@@ -19,7 +19,6 @@ public class CourseDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
-            req.setAttribute(Tags.TAG_REALNAME, user.getName());
             String[] pathItems = req.getRequestURI().split("[/]");
             String courseId = pathItems[pathItems.length-1];
             Course course = Course.getCourseDetail(courseId, Utils.getCurrentUser(req));

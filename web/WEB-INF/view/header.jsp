@@ -10,17 +10,17 @@
             <li><a href="/mailbox">信箱</a></li>
             <li><a href="/message">消息</a></li>
             <!-- Dropdown Trigger -->
-            <li><a class="dropdown-button" href="#!" data-activates="dropdown-main">${realname} (${userid})
+            <li><a class="dropdown-button" data-activates="dropdown-main">${user.getName()} (${user.getId()})
                 <i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
 
         <ul class="side-nav" id="mobile-side-nav">
-            <li><a href="/">总览</a></li>
-            <li><a href="/courses">课程</a></li>
-            <li><a href="/homework">作业</a></li>
-            <li><a href="/mailbox">信箱</a></li>
-            <li><a href="/message">消息</a></li>
-            <li><a onclick="logout()">退出</a></li>
+            <li><a class="waves-effect" href="/">总览</a></li>
+            <li><a class="waves-effect" href="/courses">课程</a></li>
+            <li><a class="waves-effect" href="/homework">作业</a></li>
+            <li><a class="waves-effect" href="/mailbox">信箱</a></li>
+            <li><a class="waves-effect" href="/message">消息</a></li>
+            <li><a class="waves-effect" onclick="logout()">退出</a></li>
         </ul>
     </div>
 </nav>

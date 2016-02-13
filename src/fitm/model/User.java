@@ -32,28 +32,27 @@ public class User {
         return userType;
     }
 
-    public static boolean validate(String userid, String password) throws ServletException {
-        boolean flag = false;
+    public static User validate(String userid, String password) throws ServletException {
         SQLHelper helper = SQLHelper.getInstance();
         String selection = SQLHelper.Columns.USER_ID + "=? ";
         String[] selectionArgs = {userid};
         ResultSet rs = helper.query(SQLHelper.TABLE_USER_WEB, null, selection, selectionArgs, null);
+        User user = null;
         if (rs != null) {
             try {
-                while (rs.next()) {
+                if (rs.next()) {
                     if (password.equals(rs.getString(SQLHelper.Columns.PASSWORD))) {
-                        flag = true;
-                        Utils.setCurrentUser(new User(
+                        user = new User(
                                 userid,
                                 rs.getString(SQLHelper.Columns.REALNAME),
                                 rs.getInt(SQLHelper.Columns.USERTYPE)
-                        ));
+                        );
                     }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        return flag;
+        return user;
     }
 }
