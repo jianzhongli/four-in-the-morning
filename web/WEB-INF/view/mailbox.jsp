@@ -140,5 +140,6 @@
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/materialize.min.js"></script>
         <script src="../../js/header.js" type="application/javascript"></script>
+        <script type="text/javascript" src="../../js/mailbox.js"></script>
     </body>
 </html>
