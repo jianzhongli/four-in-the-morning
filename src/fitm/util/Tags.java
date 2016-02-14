@@ -7,6 +7,7 @@ public interface Tags {
     final static String TAG_OLD_PASSWORD = "old-password";
     final static String TAG_REALNAME = "realname";
     final static String TAG_COURSE_ID = "course_id";
+    final static String TAG_HOMEWORK_ID = "homework_id";
     final static String TAG_COURSE = "course";
     final static String TAG_COURSE_LIST = "course_list";
     final static String TAG_HOMEWORK_LIST = "homework_list";

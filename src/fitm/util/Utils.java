@@ -19,7 +19,6 @@ import java.util.logging.Logger;
 
 public class Utils {
     private static Gson gson;
-    private static User currentUser;
 
     // private constructor to prevent instantiation
     private Utils() {}

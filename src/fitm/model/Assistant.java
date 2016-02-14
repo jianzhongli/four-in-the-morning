@@ -1,6 +1,6 @@
 package fitm.model;
 
-public class Assistant extends User {
+public class Assistant extends Student {
 
     public Assistant(String id, String name, int userType) {
         super(id, name, userType);

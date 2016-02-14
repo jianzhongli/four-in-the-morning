@@ -53,6 +53,12 @@ public class User {
                                 rs.getString(SQLHelper.Columns.REALNAME),
                                 rs.getInt(SQLHelper.Columns.USERTYPE)
                         );
+                        // TODO: move USERTYPE CONSTANT to class User
+                        switch (user.getUserType()) {
+                            case SQLHelper.USERTYPE_ADMINISTRATOR: user = new Admin(user); break;
+                            case SQLHelper.USERTYPE_TEACHER: user = new Teacher(user); break;
+                            case SQLHelper.USERTYPE_STUDENT: user = new Student(user); break;
+                        }
                     }
                 }
             } catch (SQLException ex) {
