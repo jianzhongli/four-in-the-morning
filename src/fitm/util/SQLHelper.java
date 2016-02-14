@@ -176,4 +176,8 @@ public class SQLHelper {
         stat.close();
         conn.close();
     }
+
+    public Connection getConnection() throws SQLException {
+        return pool.getConnection();
+    }
 }

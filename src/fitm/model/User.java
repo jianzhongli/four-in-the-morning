@@ -20,6 +20,12 @@ public class User {
         this.userType = userType;
     }
 
+    public User(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.userType = user.getUserType();
+    }
+
     public String getId() {
         return id;
     }

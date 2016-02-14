@@ -5,4 +5,8 @@ public class Assistant extends User {
     public Assistant(String id, String name, int userType) {
         super(id, name, userType);
     }
+
+    public Assistant(User user) {
+        super(user);
+    }
 }

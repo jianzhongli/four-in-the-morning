@@ -1,6 +1,7 @@
 package fitm.ajax;
 
 import fitm.model.Course;
+import fitm.model.User;
 import fitm.util.Utils;
 
 import javax.servlet.ServletException;
@@ -15,12 +16,13 @@ public class AjaxCourseDetailServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
+        User user = Utils.getCurrentUser(req);
         Response response;
 
-        if (Utils.hasLogin(req)) {
+        if (user != null) {
             String[] pathItems = req.getRequestURI().split("[/]");
             String courseId = pathItems[pathItems.length-1];
-            Course course = Course.getCourseDetail(courseId, Utils.getCurrentUser(req));
+            Course course = Course.getCourseDetail(courseId, user);
             if (course != null) {
                 response = new Success(course);
             } else {

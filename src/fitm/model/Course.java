@@ -17,13 +17,15 @@ public class Course {
     private String course_name;
     private Date course_begin;
     private Date course_end;
+    private Teacher teacher;
     private ArrayList<Class> classes;
 
-    public Course(String course_id, String course_name, Date course_begin, Date course_end, ArrayList<Class> classes) {
+    public Course(String course_id, String course_name, Date course_begin, Date course_end, Teacher teacher, ArrayList<Class> classes) {
         this.course_id = course_id;
         this.course_name = course_name;
         this.course_begin = course_begin;
         this.course_end = course_end;
+        this.teacher = teacher;
         this.classes = classes;
     }
 
@@ -57,6 +59,14 @@ public class Course {
 
     public void setCourse_end(Date course_end) {
         this.course_end = course_end;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
     }
 
     public ArrayList<Class> getClasses() {
@@ -97,7 +107,15 @@ public class Course {
                     String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
                     Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
                     Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
-                    courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, null));
+
+                    Teacher teacher = null;
+                    if(user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
+                        teacher = Student.getMyCourseTeacher(courseId, userid);
+                    } else if(user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
+                        teacher = new Teacher(user);
+                    }
+
+                    courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, teacher, null));
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
@@ -130,12 +148,12 @@ public class Course {
 
                     switch (user.getUserType()) {
                         case SQLHelper.USERTYPE_STUDENT: {
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, null);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, Student.getMyCourseTeacher(courseId, user.getId()), null);
                             break;
                         }
                         case SQLHelper.USERTYPE_TEACHER: {
                             ArrayList<Class> classes = Class.getClassesList(courseid, user);
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, classes);
+                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user), classes);
                         }
                     }
                 }

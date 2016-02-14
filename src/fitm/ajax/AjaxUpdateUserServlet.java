@@ -25,11 +25,11 @@ public class AjaxUpdateUserServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
+        User user = Utils.getCurrentUser(req);
         Response response;
 
-        if (Utils.hasLogin(req)) {
-            HttpSession session = req.getSession();
-            String userid  = session.getAttribute(Tags.TAG_USERID).toString();
+        if (user != null) {
+            String userid  = user.getId();
             String old_password = req.getParameter(Tags.TAG_OLD_PASSWORD);
             String new_password = req.getParameter(Tags.TAG_PASSWORD);
             if (User.validate(userid, old_password) != null) {

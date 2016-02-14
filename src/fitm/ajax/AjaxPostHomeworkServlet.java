@@ -3,7 +3,6 @@ package fitm.ajax;
 import fitm.controller.Path;
 import fitm.model.HomeworkPost;
 import fitm.model.User;
-import fitm.util.SQLHelper;
 import fitm.util.Tags;
 import fitm.util.Utils;
 import org.apache.commons.io.IOUtils;
@@ -17,7 +16,7 @@ import javax.servlet.http.Part;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Date;
+import java.sql.Date;
 
 // TODO: 对参数合法性进行检查
 @MultipartConfig
@@ -26,6 +25,7 @@ public class AjaxPostHomeworkServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
         User user = Utils.getCurrentUser(req);
         Response response;
@@ -34,10 +34,9 @@ public class AjaxPostHomeworkServlet extends HttpServlet {
             String course_id = req.getParameter(Tags.TAG_COURSE_ID);
             String homework_title = req.getParameter(Tags.TAG_HOMEWORK_TITLE);
             String homework_description = req.getParameter(Tags.TAG_HOMEWORK_DESCRIPTION);
-//            Date post_date = Utils.parseDate(req.getParameter(Tags.TAG_POST_DATE));
-//            Date ddl = Utils.parseDate(req.getParameter(Tags.TAG_DDL));
-            Date post_date = new Date();
-            Date ddl = new Date();
+            Date post_date = new Date(Long.valueOf(req.getParameter(Tags.TAG_POST_DATE)));
+            Date ddl = new Date(Long.valueOf(req.getParameter(Tags.TAG_DDL)));
+
             String homework_id = course_id + System.currentTimeMillis();
             String attach_file = "";
 
