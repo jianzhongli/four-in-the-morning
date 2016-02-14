@@ -70,6 +70,15 @@
 
     <!--Controllers-->
     <servlet>
+        <servlet-name>MailboxServlet</servlet-name>
+        <servlet-class>fitm.controller.MailboxServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MailboxServlet</servlet-name>
+        <url-pattern>/mailbox</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>CourseDetailServlet</servlet-name>
         <servlet-class>fitm.controller.CourseDetailServlet</servlet-class>
     </servlet>

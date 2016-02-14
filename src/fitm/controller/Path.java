@@ -8,6 +8,7 @@ public final class Path {
     final static String LOGIN = "/WEB-INF/view/login.jsp";
     final static String OVERVIEW = "/WEB-INF/view/overview.jsp";
     final static String EDIT_PASSWORD = "/WEB-INF/view/edit-password.jsp";
+    final static String MAILBOX = "/WEB-INF/view/mailbox.jsp";
 
     public final static String HOMEWORK_POST_FILE_PATH = "/homework-post";
 }
