@@ -16,7 +16,8 @@ public interface Tags {
     final static String TAG_POST_DATE = "post_date";
     final static String TAG_DDL = "ddl";
     final static String TAG_USERTYPE = "userType";
-
+    final static String TAG_MAIL_TO = "mail_to";
+    final static String TAG_MAIL_CONTENT = "mail_content";
 
     final static String DATA_SOURCE_PREFIX = "java:comp/env/";
     final static String DATA_SOURCE = "jdbc/keckacupa";

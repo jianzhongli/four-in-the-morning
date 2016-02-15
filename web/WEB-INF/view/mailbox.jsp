@@ -37,7 +37,7 @@
                                         添加表情
                                     </div>
                                     <div class="col s6">
-                                        <a class="btn waves-effect waves-light">发送</a>
+                                        <a class="btn waves-effect waves-light" onclick="send_mail()">发送</a>
                                     </div>
                                 </div>
                             </form>
