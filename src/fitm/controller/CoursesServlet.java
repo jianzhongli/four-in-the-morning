@@ -17,10 +17,6 @@ public class CoursesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
-            req.setAttribute(Tags.TAG_COURSE_LIST, Course.getCoursesList(user));
-            if (user.isAssistant()) {
-                req.setAttribute(Tags.TAG_ASSISTANT_COURSE_LIST, Course.getAssistantCoursesList(user));
-            }
             req.getRequestDispatcher(Path.COURSES).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
