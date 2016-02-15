@@ -70,8 +70,8 @@ public class SQLHelper {
         final static String DDL                     = "ddl";
         final static String SUBMIT_DATE             = "submit_date";
         final static String SCORE                   = "score";
-        final static String FROM                    = "mail_from";
-        final static String TO                      = "mail_to";
+        final static String MAIL_FROM               = "mail_from";
+        final static String MAIL_TO                 = "mail_to";
         final static String CONTENT                 = "content";
         final static String HAS_READ                = "has_read";
     }

@@ -22,6 +22,7 @@ public class AjaxSendMailServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
+            String mail_from = user.getName() + " " + user.getId();
             String mail_to = req.getParameter(Tags.TAG_MAIL_TO);
             String mail_content = req.getParameter(Tags.TAG_MAIL_CONTENT);
 
@@ -30,7 +31,7 @@ public class AjaxSendMailServlet extends HttpServlet {
             } else if (mail_content != null && mail_content.isEmpty()) { // 参数检查：邮件内容合法
                 response = new Failure("请填写邮件正文");
             } else {
-                Mail mail = new Mail(user.getId(), mail_to, mail_content, false);
+                Mail mail = new Mail(mail_from, mail_to, mail_content, false);
                 if (Mail.sendMail(mail)) {
                     response = new Success(mail);
                 } else {
