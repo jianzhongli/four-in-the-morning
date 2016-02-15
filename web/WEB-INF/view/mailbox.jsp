@@ -49,7 +49,7 @@
                         <div class="card-content">
                             <div class="card-title"><h5>接收消息</h5></div>
                             <div class="row">
-                                <div class="col s12">
+                                <div class="col s12" id="mail_list">
                                     <ul class="collapsible popout" data-collapsible="accordion">
                                         <c:forEach items="${mail_list}" var="mail">
                                             <li>
