@@ -19,6 +19,9 @@ public class Mail {
     private Timestamp date;
     private boolean has_read;
 
+    public final static int defaultPageSize = 6;
+    public final static int defaultPageIndex = 1;
+
     public Mail(String from, String to, String content, Timestamp date, boolean has_read) {
         this.from = from;
         this.to = to;
@@ -96,17 +99,20 @@ public class Mail {
         return flag;
     }
 
-    public static ArrayList<Mail> getMailsList(String userid) throws ServletException {
+    public static ArrayList<Mail> getMailsList(String userid, int pageSize, int pageIndex) throws ServletException {
         ArrayList<Mail> mailArrayList = new ArrayList<>();
 
         try {
             PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
-                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC",
+                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * (? - 1) ROWS FETCH NEXT ? ROWS ONLY",
                             SQLHelper.TABLE_MAILBOX,
                             SQLHelper.Columns.MAIL_TO,
                             SQLHelper.Columns.MAIL_DATE)
             );
             pstat.setString(1, userid);
+            pstat.setInt(2, pageSize);
+            pstat.setInt(3, pageIndex);
+            pstat.setInt(4, pageSize);
             ResultSet rs = pstat.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
