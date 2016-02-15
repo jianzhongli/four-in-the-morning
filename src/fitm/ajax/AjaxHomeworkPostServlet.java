@@ -57,25 +57,8 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
-            String course_id = req.getParameter(Tags.TAG_COURSE_ID);
-            String homework_title = req.getParameter(Tags.TAG_HOMEWORK_TITLE);
-            String homework_description = req.getParameter(Tags.TAG_HOMEWORK_DESCRIPTION);
-            Timestamp post_date = new Timestamp(System.currentTimeMillis());
-            Timestamp ddl = new Timestamp(Long.valueOf(req.getParameter(Tags.TAG_DDL)));
+            HomeworkPost homeworkPost = getHomeworkPostFromRequest(req);
 
-            String homework_id = course_id + System.currentTimeMillis();
-            String attach_file = "";
-
-            // attach_file is optional
-            Part file_part = req.getPart(Tags.TAG_ATTATCH_FILE);
-            if (file_part != null) {
-                String extension = Utils.getSubmittedFileNameExtension(file_part);
-                attach_file = Path.HOMEWORK_POST_FILE_PATH + homework_id + extension;
-                IOUtils.copy(file_part.getInputStream(), new FileOutputStream(attach_file));
-            }
-
-            HomeworkPost homeworkPost =
-                    new HomeworkPost(course_id, homework_id, homework_title, homework_description, attach_file, post_date, ddl);
             if (HomeworkPost.insertHomeworkPost(homeworkPost)) {
                 response = new Success(homeworkPost);
             } else {
@@ -117,5 +100,27 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         }
 
         writer.write(Utils.getGson().toJson(response));
+    }
+
+    private HomeworkPost getHomeworkPostFromRequest(HttpServletRequest req) throws ServletException, IOException {
+        String course_id = req.getParameter(Tags.TAG_COURSE_ID);
+        String homework_title = req.getParameter(Tags.TAG_HOMEWORK_TITLE);
+        String homework_description = req.getParameter(Tags.TAG_HOMEWORK_DESCRIPTION);
+        Timestamp post_date = new Timestamp(System.currentTimeMillis());
+        Timestamp ddl = new Timestamp(Long.valueOf(req.getParameter(Tags.TAG_DDL)));
+
+        String homework_id = course_id + System.currentTimeMillis();
+        String attach_file = "";
+
+        // attach_file is optional, this part is not tested yet.
+        Part file_part = req.getPart(Tags.TAG_ATTATCH_FILE);
+        if (file_part != null) {
+            String extension = Utils.getSubmittedFileNameExtension(file_part);
+            attach_file = Path.HOMEWORK_POST_FILE_PATH + homework_id + extension;
+            IOUtils.copy(file_part.getInputStream(), new FileOutputStream(attach_file));
+        }
+
+
+        return new HomeworkPost(course_id, homework_id, homework_title, homework_description, attach_file, post_date, ddl);
     }
 }

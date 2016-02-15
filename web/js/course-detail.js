@@ -2,7 +2,7 @@ function post_homework() {
     var course_id = document.getElementById("course-id").value;
     var homework_title = document.getElementById("homework_title").value;
     var homework_description = document.getElementById("homework_description").value;
-    var ddl = new Date(document.getElementById("ddl").value).valueOf()
+    var ddl = new Date(document.getElementById("ddl").value).valueOf();
 
     var formData = new FormData();
     formData.append("course_id", course_id);
@@ -10,12 +10,11 @@ function post_homework() {
     formData.append("homework_description", homework_description);
     formData.append("post_date", new Date().valueOf());
     formData.append("ddl", ddl);
-
     //formData.append("attach_file", document.getElementById("attach_file").files[0]);
 
     xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/ajax/homework", true);
-    xhttp.send();
+    xhttp.send(formData);
     xhttp.onreadystatechange = function () {
         if (xhttp.readyState == 4 && xhttp.status == 200) {
             var homework = JSON.parse(xhttp.responseText);
@@ -55,26 +54,27 @@ function delete_homework() {
 }
 
 function edit_homework(homework_id) {
-    xhttp = new XMLHttpRequest();
-    xhttp.open("GET", "/ajax/homework/"+homework_id, true);
-    xhttp.send();
-    xhttp.onreadystatechange = function () {
-        if (xhttp.readyState == 4 && xhttp.status == 200) {
-            var obj = JSON.parse(xhttp.responseText);
-            if (obj.success) {
-                homework = obj.data;
-                $('#modal-post-homework').openModal();
-                $('#homework_title').val(homework.homework_title);
-                $('#homework_title').trigger('autoresize');
-                $('#homework_description').val(homework.homework_description);
-                $('#homework_description').trigger('autoresize');
-                $('#ddl').val(homework.ddl);
-                $('#ddl').trigger('autoresize');
-            } else {
-                Materialize.toast(obj.msg, 2000);
-            }
-        }
-    }
+    Materialize.toast('Not implemented yet!', 2000);
+    //xhttp = new XMLHttpRequest();
+    //xhttp.open("GET", "/ajax/homework/"+homework_id, true);
+    //xhttp.send();
+    //xhttp.onreadystatechange = function () {
+    //    if (xhttp.readyState == 4 && xhttp.status == 200) {
+    //        var obj = JSON.parse(xhttp.responseText);
+    //        if (obj.success) {
+    //            homework = obj.data;
+    //            $('#modal-post-homework').openModal();
+    //            $('#homework_title').val(homework.homework_title);
+    //            $('#homework_title').trigger('autoresize');
+    //            $('#homework_description').val(homework.homework_description);
+    //            $('#homework_description').trigger('autoresize');
+    //            $('#ddl').val(homework.ddl);
+    //            $('#ddl').trigger('autoresize');
+    //        } else {
+    //            Materialize.toast(obj.msg, 2000);
+    //        }
+    //    }
+    //}
 }
 
 $(document).ready(function(){
