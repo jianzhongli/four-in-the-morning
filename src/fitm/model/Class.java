@@ -63,4 +63,10 @@ public class Class {
         }
         return classeArrayList;
     }
+
+    public static ArrayList<Class> getAssistantClassesList(String courseid, User user) throws ServletException {
+        ArrayList<Class> classArrayList = new ArrayList<>();
+
+        return classArrayList;
+    }
 }

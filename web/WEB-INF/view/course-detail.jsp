@@ -23,7 +23,7 @@
                             <li class="tab col s3"><a class="active" href="#overview">课程总览</a></li>
                             <li class="tab col s3"><a href="#slides">课件下载</a></li>
                             <li class="tab col s3"><a href="#homework">查看作业</a></li>
-                            <c:if test="${user.getUserType() < 2}">
+                            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                                 <li class="tab col s3"><a href="#students">学生列表</a></li>
                             </c:if>
                         </ul>
@@ -88,10 +88,10 @@
             <jsp:include page="homework.jsp"/>
 
             <%--如果当前用户是老师，显示教学班列表--%>
-            <c:if test="${user.getUserType() < 2}">
+            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                 <div class="row">
                     <div class="col s12" id="students">
-                        <c:forEach var="teaching_class" items="${course.getClasses()}">
+                        <c:forEach var="teaching_class" items="${course.classes}">
                             <div class="section">
                                 <h5>${teaching_class.getClass_name()}</h5>
                                 <div class="divider"></div>

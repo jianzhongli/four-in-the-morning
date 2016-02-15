@@ -31,7 +31,7 @@ public class AjaxCoursesServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
-            response = new Success(Course.getCoursesList(user.getId()));
+            response = new Success(Course.getCoursesList(user));
         } else {
             response = new Failure("用户未登录。");
         }

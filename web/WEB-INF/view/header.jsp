@@ -9,7 +9,7 @@
             <li><a href="/mailbox">信箱</a></li>
             <li><a href="/message">消息</a></li>
             <!-- Dropdown Trigger -->
-            <li><a class="dropdown-button" data-activates="dropdown-main">${user.getName()} (${user.getId()})
+            <li><a class="dropdown-button" data-activates="dropdown-main">${user.name} (${user.id})
                 <i class="material-icons right">arrow_drop_down</i></a></li>
         </ul>
 
