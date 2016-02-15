@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 
 public class AjaxSendMailServlet extends HttpServlet {
     @Override
@@ -22,15 +23,17 @@ public class AjaxSendMailServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
+            String mail_from = user.getName() + " " + user.getId();
             String mail_to = req.getParameter(Tags.TAG_MAIL_TO);
             String mail_content = req.getParameter(Tags.TAG_MAIL_CONTENT);
+            Timestamp mail_date = new Timestamp(System.currentTimeMillis());
 
             if (User.getUserById(mail_to) == null) { // 参数检查：收件人存在
                 response = new Failure("收件人不存在");
             } else if (mail_content != null && mail_content.isEmpty()) { // 参数检查：邮件内容合法
                 response = new Failure("请填写邮件正文");
             } else {
-                Mail mail = new Mail(user.getId(), mail_to, mail_content, false);
+                Mail mail = new Mail(mail_from, mail_to, mail_content, mail_date, false);
                 if (Mail.sendMail(mail)) {
                     response = new Success(mail);
                 } else {

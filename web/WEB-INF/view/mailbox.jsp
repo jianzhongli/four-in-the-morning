@@ -51,70 +51,16 @@
                             <div class="row">
                                 <div class="col s12">
                                     <ul class="collapsible popout" data-collapsible="accordion">
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="collapsible-header">
-                                                <span>李四<i class="material-icons">perm_identity</i></span>
-                                            </div>
-                                            <div class="collapsible-body">
-                                                <p>One common flaw we've seen in many frameworks is a lack of support for truly responsive text. While elements on the page resize fluidly, text still resizes on a fixed basis. To ameliorate this problem, for text heavy pages, we've created a class that fluidly scales text size and line-height to optimize readability for the user. Line length stays between 45-80 characters and line height scales to be larger on smaller screens. To see Flow Text in action, slowly resize your browser and watch the size of this text body change! Use the button above to toggle off/on flow-text to see the difference</p>
-                                            </div>
-                                        </li>
+                                        <c:forEach items="${mail_list}" var="mail">
+                                            <li>
+                                                <div class="collapsible-header">
+                                                    <span>${mail.getFrom()}<i class="material-icons">perm_identity</i></span>
+                                                </div>
+                                                <div class="collapsible-body">
+                                                    <p>${mail.getContent()}</p>
+                                                </div>
+                                            </li>
+                                        </c:forEach>
                                     </ul>
                                 </div>
                             </div>
