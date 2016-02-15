@@ -80,6 +80,7 @@ public class HomeworkPost {
             if (pstmt.executeUpdate() >= 0) {
                 flag = true;
             }
+            SQLHelper.getInstance().closePreparedStatement(pstmt);
         } catch (SQLException ex) {
             Logger.getLogger(HomeworkPost.class.getName()).log(Level.SEVERE, null, ex);
         }

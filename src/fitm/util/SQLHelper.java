@@ -7,10 +7,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.jar.Pack200;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -45,6 +42,8 @@ public class SQLHelper {
     final public static String TABLE_COURSE_CLASS = "COURSE_CLASS";
     final public static String TABLE_CLASS_STUDENT = "CLASS_STUDENT";
     final public static String TABLE_HOMEWORK_POST = "HOMEWORK_POST";
+    final public static String TABLE_MAILBOX = "MAILBOX";
+
     final public static int USERTYPE_ADMINISTRATOR = 0;
     final public static int USERTYPE_TEACHER = 1;
     final public static int USERTYPE_STUDENT = 2;
@@ -71,6 +70,10 @@ public class SQLHelper {
         final static String DDL                     = "ddl";
         final static String SUBMIT_DATE             = "submit_date";
         final static String SCORE                   = "score";
+        final static String FROM                    = "mail_from";
+        final static String TO                      = "mail_to";
+        final static String CONTENT                 = "content";
+        final static String HAS_READ                = "has_read";
     }
 
     /**
@@ -174,6 +177,12 @@ public class SQLHelper {
         Connection conn = stat.getConnection();
         rs.close();
         stat.close();
+        conn.close();
+    }
+
+    public void closePreparedStatement(PreparedStatement pstat) throws SQLException {
+        Connection conn = pstat.getConnection();
+        pstat.close();
         conn.close();
     }
 

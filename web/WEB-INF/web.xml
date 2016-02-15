@@ -69,6 +69,15 @@
         <servlet-name>AjaxHomeworkServlet</servlet-name>
         <url-pattern>/ajax/homework/*</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AjaxSendMailServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxSendMailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxSendMailServlet</servlet-name>
+        <url-pattern>/ajax/mailbox</url-pattern>
+    </servlet-mapping>
     <!--End AJAX related-->
 
 

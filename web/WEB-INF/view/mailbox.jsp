@@ -37,7 +37,7 @@
                                         添加表情
                                     </div>
                                     <div class="col s6">
-                                        <a class="btn waves-effect waves-light">发送</a>
+                                        <a class="btn waves-effect waves-light" onclick="send_mail()">发送</a>
                                     </div>
                                 </div>
                             </form>
@@ -140,5 +140,6 @@
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
         <script type="text/javascript" src="../../js/materialize.min.js"></script>
         <script src="../../js/header.js" type="application/javascript"></script>
+        <script type="text/javascript" src="../../js/mailbox.js"></script>
     </body>
 </html>
