@@ -84,7 +84,7 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
-            if (user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
+            if (user.isTeacher()) {
                 String[] pathItems = req.getRequestURI().split("[/]");
                 String homework_id = pathItems[pathItems.length-1];
                 if (HomeworkPost.deleteHomeworkPost(homework_id)) {

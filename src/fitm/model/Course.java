@@ -1,14 +1,12 @@
 package fitm.model;
 
 import fitm.util.SQLHelper;
-import fitm.util.Utils;
 
 import javax.servlet.ServletException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.concurrent.SynchronousQueue;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -77,26 +75,24 @@ public class Course {
         this.classes = classes;
     }
 
-    public static ArrayList<Course> getCoursesList(String userid) throws ServletException {
+    public static ArrayList<Course> getCoursesList(User user) throws ServletException {
         ArrayList<Course> courseArrayList = new ArrayList<>();
         SQLHelper helper = SQLHelper.getInstance();
-        User user = User.getUserById(userid);
 
         String sql = "";
-        if (user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
+        if (user.getUser_type() == User.USERTYPE_STUDENT) {
             sql = String.format("SELECT * FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s = '%s'));",
                     SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
                     SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.CLASS_ID,
-                    SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID, userid
+                    SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID, user.getId()
             );
-
-        } else if (user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
+        } else if (user.getUser_type() == User.USERTYPE_TEACHER) {
             sql = String.format("SELECT * FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s = '%s');",
                     SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
-                    SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.TEACHER_ID, userid
+                    SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.TEACHER_ID, user.getId()
             );
         }
         ResultSet rs = helper.executeQuery(sql);
@@ -109,9 +105,9 @@ public class Course {
                     Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
 
                     Teacher teacher = null;
-                    if(user.getUserType() == SQLHelper.USERTYPE_STUDENT) {
-                        teacher = Student.getMyCourseTeacher(courseId, userid);
-                    } else if(user.getUserType() == SQLHelper.USERTYPE_TEACHER) {
+                    if(user.getUser_type() == User.USERTYPE_STUDENT) {
+                        teacher = Student.getMyCourseTeacher(courseId, user.getId());
+                    } else if(user.getUser_type() == User.USERTYPE_TEACHER) {
                         teacher = new Teacher(user);
                     }
 
@@ -146,12 +142,12 @@ public class Course {
                     Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
                     Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
 
-                    switch (user.getUserType()) {
-                        case SQLHelper.USERTYPE_STUDENT: {
+                    switch (user.getUser_type()) {
+                        case User.USERTYPE_STUDENT: {
                             courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, Student.getMyCourseTeacher(courseId, user.getId()), null);
                             break;
                         }
-                        case SQLHelper.USERTYPE_TEACHER: {
+                        case User.USERTYPE_TEACHER: {
                             ArrayList<Class> classes = Class.getClassesList(courseid, user);
                             courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user), classes);
                         }
@@ -163,10 +159,40 @@ public class Course {
                 try {
                     helper.closeResultSet(rs);
                 } catch (SQLException ex) {
-                    Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         }
         return courseDetail;
+    }
+
+    // 获取该同学担任助教的课程列表
+    public static ArrayList<Course> getAssistantCoursesList(User user) throws ServletException {
+        // SELECT * FROM COURSE WHERE course_id IN
+        //      (SELECT DISTINCT course_id FROM COURSE_CLASS WHERE class_id IN
+        //          (SELECT class_id FROM CLASS_TA WHERE ta = <ta_id>));
+        ArrayList<Course> courseArrayList = new ArrayList<>();
+        String sql = String.format("SELECT * FROM %s WHERE %s IN " +
+                "(SELECT DISTINCT %s FROM %s WHERE %s IN " +
+                "(SELECT %s FROM %s WHERE %s = %s));",
+                SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
+                SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.CLASS_ID,
+                SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_TA, SQLHelper.Columns.TA, user.getId()
+                );
+        try {
+            ResultSet rs = SQLHelper.getInstance().executeQuery(sql);
+            while (rs.next()) {
+                String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
+                String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
+                Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
+                Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+                ArrayList<Class> classes = Class.getAssistantClassesList(courseId, user);
+                Teacher teacher = Student.getMyCourseTeacher(courseId, user.getId());
+                courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, teacher, classes));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return courseArrayList;
     }
 }

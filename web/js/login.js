@@ -11,8 +11,7 @@ function login() {
                 var obj = JSON.parse(xhttp.responseText);
                 if (!obj.success) {
                     Materialize.toast('用户名或密码错误', 2000);
-                } else { // 如果登录成功，重定向至用户个人主页
-
+                } else { // 如果登录成功，重定向
                     window.location.href = document.referrer;
                 }
             }

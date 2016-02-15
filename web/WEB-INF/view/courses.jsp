@@ -22,12 +22,8 @@
                         <div class="col">
                             <div class="card hoverable">
                                 <div class="card-content">
-                                    <div class="card-title">
-                                        ${course.course_name}
-                                    </div>
-                                    <p>
-                                        教师姓名: ${course.teacher.name}
-                                    </p>
+                                    <div class="card-title">${course.course_name}</div>
+                                    <p>${course.teacher.name}</p>
                                 </div>
                                 <div class="card-action">
                                     <a href="/courses/${course.course_id}">查看详情</a>
@@ -38,57 +34,27 @@
                 </div>
             </div>
 
-            <div class="section">
-                <h5>助教课程</h5>
-                <div class="divider"></div>
-                <div class="row">
-                    <div class="col">
-                        <div class="card hoverable">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    移动应用交互设计
+            <c:if test="${user.isAssistant()}">
+                <div class="section">
+                    <h5>助教课程</h5>
+                    <div class="divider"></div>
+                    <div class="row">
+                        <c:forEach var="assistant_course" items="${assistant_course_list}">
+                            <div class="col">
+                                <div class="card hoverable">
+                                    <div class="card-content">
+                                        <div class="card-title">${assistant_course.course_name}</div>
+                                        <p>${assistant_course.teacher.name}</p>
+                                    </div>
+                                    <div class="card-action">
+                                        <a href="/courses/${assistant_course.course_id}">查看详情</a>
+                                    </div>
                                 </div>
-                                <p>
-                                    张少科
-                                </p>
                             </div>
-                            <div class="card-action">
-                                <a href="#">查看详情</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card hoverable">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    移动网络安全
-                                </div>
-                                <p>
-                                    轩辕哲
-                                </p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">查看详情</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card hoverable">
-                            <div class="card-content">
-                                <div class="card-title">
-                                    计算机语言及其处理实验
-                                </div>
-                                <p>
-                                    Eun Young Kang
-                                </p>
-                            </div>
-                            <div class="card-action">
-                                <a href="#">查看详情</a>
-                            </div>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
-            </div>
+            </c:if>
         </div>
 
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>

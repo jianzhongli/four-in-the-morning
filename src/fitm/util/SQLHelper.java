@@ -43,10 +43,7 @@ public class SQLHelper {
     final public static String TABLE_CLASS_STUDENT = "CLASS_STUDENT";
     final public static String TABLE_HOMEWORK_POST = "HOMEWORK_POST";
     final public static String TABLE_MAILBOX = "MAILBOX";
-
-    final public static int USERTYPE_ADMINISTRATOR = 0;
-    final public static int USERTYPE_TEACHER = 1;
-    final public static int USERTYPE_STUDENT = 2;
+    final public static String TABLE_CLASS_TA = "CLASS_TA";
 
     public interface Columns {
         final static String USER_ID                 = "user_id";

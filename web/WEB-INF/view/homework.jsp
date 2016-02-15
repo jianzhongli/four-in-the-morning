@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <div id="homework">
-    <c:if test="${user.getUserType() < 2}">
+    <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
         <div class="row">
             <div class="col offset-l1">
                 <a class="waves-effect waves-light btn modal-trigger" href="#modal-post-homework">发布新作业 </a>
@@ -27,12 +27,12 @@
                                 <div style="width: 100%">
                                     <div class="right-align">
                                         <c:choose>
-                                            <c:when test="${user.getUserType() == 2}">
-                                                <a class="btn waves-effect waves-light homework-post-action">交作业</a>
-                                            </c:when>
-                                            <c:otherwise>
+                                            <c:when test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                                                 <a class="btn red waves-effect waves-light homework-post-action" onclick="delete_confirm('${homework.getHomework_id()}')">删除</a>
                                                 <a class="btn waves-effect waves-light homework-post-action" onclick="edit_homework('${homework.getHomework_id()}')">修改</a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="btn waves-effect waves-light homework-post-action">交作业</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>

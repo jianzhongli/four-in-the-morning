@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Student extends User {
-    public Student(String id, String name, int userType) {
-        super(id, name, userType);
+    public Student(String id, String name) {
+        super(id, name, User.USERTYPE_STUDENT);
     }
 
     public Student(User user) {
@@ -30,7 +30,7 @@ public class Student extends User {
             while(rs.next()) {
                 String studentId = rs.getString(SQLHelper.Columns.USER_ID);
                 String studentName = rs.getString(SQLHelper.Columns.REALNAME);
-                studentArrayList.add(new Student(studentId, studentName, SQLHelper.USERTYPE_STUDENT));
+                studentArrayList.add(new Student(studentId, studentName));
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
