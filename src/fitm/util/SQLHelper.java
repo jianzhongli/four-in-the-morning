@@ -73,6 +73,7 @@ public class SQLHelper {
         final static String MAIL_FROM               = "mail_from";
         final static String MAIL_TO                 = "mail_to";
         final static String CONTENT                 = "content";
+        final static String MAIL_DATE               = "mail_date";
         final static String HAS_READ                = "has_read";
     }
 
