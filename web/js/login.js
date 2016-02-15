@@ -12,7 +12,8 @@ function login() {
                 if (!obj.success) {
                     Materialize.toast('用户名或密码错误', 2000);
                 } else { // 如果登录成功，重定向至用户个人主页
-                    window.location.href = '/';
+
+                    window.location.href = document.referrer;
                 }
             }
         }

@@ -59,11 +59,15 @@
 
     <servlet>
         <servlet-name>AjaxHomeworkServlet</servlet-name>
-        <servlet-class>fitm.ajax.AjaxPostHomeworkServlet</servlet-class>
+        <servlet-class>fitm.ajax.AjaxHomeworkPostServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AjaxHomeworkServlet</servlet-name>
         <url-pattern>/ajax/homework</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AjaxHomeworkServlet</servlet-name>
+        <url-pattern>/ajax/homework/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -94,15 +98,6 @@
     <servlet-mapping>
         <servlet-name>CourseDetailServlet</servlet-name>
         <url-pattern>/courses/*</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>HomeworkServlet</servlet-name>
-        <servlet-class>fitm.controller.HomeworkServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>HomeworkServlet</servlet-name>
-        <url-pattern>/homework</url-pattern>
     </servlet-mapping>
 
     <servlet>

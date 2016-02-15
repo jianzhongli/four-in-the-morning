@@ -1,7 +1,5 @@
 package fitm.controller;
 
-import fitm.ajax.Failure;
-import fitm.ajax.Success;
 import fitm.model.Course;
 import fitm.model.HomeworkPost;
 import fitm.model.User;
@@ -24,7 +22,7 @@ public class CourseDetailServlet extends HttpServlet {
             String[] pathItems = req.getRequestURI().split("[/]");
             String courseId = pathItems[pathItems.length-1];
             Course course = Course.getCourseDetail(courseId, Utils.getCurrentUser(req));
-            ArrayList<HomeworkPost> homeworkPostArrayList = HomeworkPost.getHomeworkPost(courseId);
+            ArrayList<HomeworkPost> homeworkPostArrayList = HomeworkPost.getHomeworkPostByCourseId(courseId);
             if (course != null) {
                 req.setAttribute(Tags.TAG_COURSE, course);
                 req.setAttribute(Tags.TAG_HOMEWORK_LIST, homeworkPostArrayList);

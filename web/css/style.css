@@ -25,3 +25,11 @@
 ul.tabs {
     overflow-x: hidden;
 }
+
+.homework-post-body {
+    white-space: pre-wrap;
+}
+
+.homework-post-action {
+    margin: 10px 10px 10px 30px;
+}

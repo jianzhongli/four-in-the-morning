@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.jsp.tagext.Tag;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class AjaxLoginServlet extends HttpServlet {
     SQLHelper helper;
