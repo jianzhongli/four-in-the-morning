@@ -104,7 +104,7 @@ public class Mail {
 
         try {
             PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
-                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * (? - 1) ROWS FETCH NEXT ? ROWS ONLY",
+                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * ? ROWS FETCH NEXT ? ROWS ONLY",
                             SQLHelper.TABLE_MAILBOX,
                             SQLHelper.Columns.MAIL_TO,
                             SQLHelper.Columns.MAIL_DATE)
@@ -131,5 +131,32 @@ public class Mail {
         }
 
         return mailArrayList;
+    }
+
+    public static int getMailsListMaxSize(String userid) throws ServletException {
+        int maxSize = 0;
+
+        try {
+            String column = "mail_rows";
+            PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("SELECT COUNT(1) AS %s FROM %s WHERE %s = ?",
+                            column,
+                            SQLHelper.TABLE_MAILBOX,
+                            SQLHelper.Columns.MAIL_TO
+                    )
+            );
+            pstat.setString(1, userid);
+            ResultSet rs = pstat.executeQuery();
+            if (rs != null) {
+                while (rs.next()) {
+                    maxSize = rs.getInt(column);
+                }
+            }
+            SQLHelper.getInstance().closeResultSet(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(Mail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("mylog: " + maxSize);
+        return maxSize;
     }
 }
