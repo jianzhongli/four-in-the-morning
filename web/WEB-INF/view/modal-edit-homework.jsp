@@ -34,7 +34,7 @@
         </form>
     </div>
     <div class="modal-footer">
-        <a class="modal-action modal-close waves-effect waves-light btn" onclick="post_homework()">提交</a>
+        <a class="modal-action modal-close waves-effect waves-light btn" onclick="post_homework_to_server()">提交</a>
         <a class="modal-action modal-close btn-flat" href="#">取消</a>
     </div>
 </div>

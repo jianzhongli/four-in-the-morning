@@ -5,7 +5,7 @@
     <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
         <div class="row">
             <div class="col offset-l1">
-                <a class="waves-effect waves-light btn modal-trigger" href="#modal-post-homework">发布新作业 </a>
+                <a class="waves-effect waves-light btn" onclick="post_new_homework()">发布新作业 </a>
             </div>
         </div>
     </c:if>
@@ -28,8 +28,8 @@
                                     <div class="right-align">
                                         <c:choose>
                                             <c:when test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
-                                                <a class="btn red waves-effect waves-light homework-post-action" onclick="delete_confirm('${homework.getHomework_id()}')">删除</a>
-                                                <a class="btn waves-effect waves-light homework-post-action" onclick="edit_homework('${homework.getHomework_id()}')">修改</a>
+                                                <a class="btn red waves-effect waves-light homework-post-action" onclick="delete_confirm('${homework.homework_id}')">删除</a>
+                                                <a class="btn waves-effect waves-light homework-post-action" onclick="edit_homework('${homework.homework_id}')">修改</a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a class="btn waves-effect waves-light homework-post-action">交作业</a>

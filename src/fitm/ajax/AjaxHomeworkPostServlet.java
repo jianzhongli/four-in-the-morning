@@ -9,6 +9,7 @@ import fitm.util.Utils;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
+import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -34,7 +35,6 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         if (user != null) {
             String[] pathItems = req.getRequestURI().split("[/]");
             String homework_id = pathItems[pathItems.length-1];
-            System.out.println(homework_id);
             HomeworkPost homeworkPost = HomeworkPost.getHomeworkPostById(homework_id);
             if (homeworkPost != null) {
                 response = new Success(homeworkPost);
@@ -54,12 +54,20 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         req.setCharacterEncoding("UTF-8");
         PrintWriter writer = resp.getWriter();
         User user = Utils.getCurrentUser(req);
+        boolean is_new = req.getParameter(Tags.TAG_HOMEWORK_ID) == null;
         Response response;
 
         if (user != null) {
+            boolean flag;
             HomeworkPost homeworkPost = getHomeworkPostFromRequest(req);
 
-            if (HomeworkPost.insertHomeworkPost(homeworkPost)) {
+            if (is_new) {
+                flag = HomeworkPost.insertHomeworkPost(homeworkPost);
+            } else {
+                flag = HomeworkPost.updateHomeworkPost(homeworkPost);
+            }
+
+            if (flag) {
                 response = new Success(homeworkPost);
             } else {
                 response = new Failure("数据库错误。");
@@ -69,11 +77,6 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         }
 
         writer.write(Utils.getGson().toJson(response));
-    }
-
-    @Override
-    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPut(req, resp);
     }
 
     @Override
@@ -109,7 +112,11 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         Timestamp post_date = new Timestamp(System.currentTimeMillis());
         Timestamp ddl = new Timestamp(Long.valueOf(req.getParameter(Tags.TAG_DDL)));
 
-        String homework_id = course_id + System.currentTimeMillis();
+        String homework_id = req.getParameter(Tags.TAG_HOMEWORK_ID);
+        if (homework_id == null) { // 若 homework_id 为 null，是新作业，不为 null 则是更新作业
+            homework_id = course_id + System.currentTimeMillis();
+        }
+
         String attach_file = "";
 
         // attach_file is optional, this part is not tested yet.

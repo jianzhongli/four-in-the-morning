@@ -88,6 +88,39 @@ public class HomeworkPost {
         return flag;
     }
 
+    public static boolean updateHomeworkPost(HomeworkPost homeworkPost) throws ServletException {
+        boolean flag = false;
+        try {
+            PreparedStatement pstmt = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("UPDATE %s SET %s=?, %s=?, %s=?, %s=?, %s=? WHERE %s=? AND %s=?",
+                            SQLHelper.TABLE_HOMEWORK_POST,
+                            SQLHelper.Columns.HOMEWORK_TITLE,
+                            SQLHelper.Columns.HOMEWORK_DESCRIPTION,
+                            SQLHelper.Columns.ATTACH_FILE,
+                            SQLHelper.Columns.POST_DATE,
+                            SQLHelper.Columns.DDL,
+                            SQLHelper.Columns.COURSE_ID,
+                            SQLHelper.Columns.HOMEWORK_ID
+                    ));
+            pstmt.setString(1, homeworkPost.getHomework_title());
+            pstmt.setString(2, homeworkPost.getHomework_description());
+            pstmt.setString(3, homeworkPost.getAttach_file());
+            pstmt.setTimestamp(4, homeworkPost.getPost_date());
+            pstmt.setTimestamp(5, homeworkPost.getDdl());
+            pstmt.setString(6, homeworkPost.getCourse_id());
+            pstmt.setString(7, homeworkPost.getHomework_id());
+
+            if (pstmt.executeUpdate() >= 0) {
+                flag = true;
+            }
+            SQLHelper.getInstance().closePreparedStatement(pstmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeworkPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return flag;
+    }
+
     public static HomeworkPost getHomeworkPostById(String homework_id) throws ServletException {
         HomeworkPost homeworkPost = null;
 
