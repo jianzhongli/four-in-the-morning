@@ -80,7 +80,7 @@ public class Course {
         SQLHelper helper = SQLHelper.getInstance();
 
         String sql = "";
-        if (user.getUser_type() == User.USERTYPE_STUDENT) {
+        if (user.isStudent()) {
             sql = String.format("SELECT * FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s = '%s'));",
@@ -88,7 +88,7 @@ public class Course {
                     SQLHelper.Columns.COURSE_ID, SQLHelper.TABLE_COURSE_CLASS, SQLHelper.Columns.CLASS_ID,
                     SQLHelper.Columns.CLASS_ID, SQLHelper.TABLE_CLASS_STUDENT, SQLHelper.Columns.STUDENT_ID, user.getId()
             );
-        } else if (user.getUser_type() == User.USERTYPE_TEACHER) {
+        } else if (user.isTeacher()) {
             sql = String.format("SELECT * FROM %s WHERE %s IN " +
                             "(SELECT %s FROM %s WHERE %s = '%s');",
                     SQLHelper.TABLE_COURSE, SQLHelper.Columns.COURSE_ID,
@@ -105,9 +105,9 @@ public class Course {
                     Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
 
                     Teacher teacher = null;
-                    if(user.getUser_type() == User.USERTYPE_STUDENT) {
+                    if(user.isStudent()) {
                         teacher = Student.getMyCourseTeacher(courseId, user.getId());
-                    } else if(user.getUser_type() == User.USERTYPE_TEACHER) {
+                    } else if(user.isTeacher()) {
                         teacher = new Teacher(user);
                     }
 
@@ -142,15 +142,12 @@ public class Course {
                     Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
                     Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
 
-                    switch (user.getUser_type()) {
-                        case User.USERTYPE_STUDENT: {
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, Student.getMyCourseTeacher(courseId, user.getId()), null);
-                            break;
-                        }
-                        case User.USERTYPE_TEACHER: {
-                            ArrayList<Class> classes = Class.getClassesList(courseid, user);
-                            courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user), classes);
-                        }
+                    if (user.isStudent()) {
+                        courseDetail = new Course(courseId, courseName, courseBegin, courseEnd,
+                                Student.getMyCourseTeacher(courseId, user.getId()), null);
+                    } else {
+                        ArrayList<Class> classes = Class.getClassesList(courseid, user);
+                        courseDetail = new Course(courseId, courseName, courseBegin, courseEnd, new Teacher(user), classes);
                     }
                 }
             } catch (SQLException ex) {

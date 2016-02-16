@@ -10,6 +10,11 @@
     <title>凌晨四点线上作业提交系统</title>
 </head>
 
+<%--如果是学生，先判断是不是这门课的 TA，下面就不用重复调用函数 isAssistantOfCourse()--%>
+<c:if test="${user.isStudent()}">
+    <c:set var="isAssitant" value="${user.isAssistantOfCourse(course.course_id)}" />
+</c:if>
+
 <body class="grey lighten-5">
 <jsp:include page="header.jsp" />
 
@@ -23,7 +28,7 @@
                             <li class="tab col s3"><a class="active" href="#overview">课程总览</a></li>
                             <li class="tab col s3"><a href="#slides">课件下载</a></li>
                             <li class="tab col s3"><a href="#homework">查看作业</a></li>
-                            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
+                            <c:if test="${user.isTeacher() || isAssitant}">
                                 <li class="tab col s3"><a href="#students">学生列表</a></li>
                             </c:if>
                         </ul>
@@ -88,12 +93,12 @@
             <jsp:include page="homework.jsp"/>
 
             <%--如果当前用户是老师，显示教学班列表--%>
-            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
+            <c:if test="${user.isTeacher() || isAssitant}">
                 <div class="row">
                     <div class="col s12" id="students">
                         <c:forEach var="teaching_class" items="${course.classes}">
                             <div class="section">
-                                <h5>${teaching_class.getClass_name()}</h5>
+                                <h5>${teaching_class.class_name}</h5>
                                 <div class="divider"></div>
                                 <table class="highlight centered bordered">
                                     <thead>
@@ -105,7 +110,7 @@
                                     </thead>
                                     <tbody>
                                     <c:forEach var="student" items="${teaching_class.getStudents()}">
-                                        <tr><td>${student.getName()}</td><td>${student.getId()}</td><td>待添加邮箱</td></tr>
+                                        <tr><td>${student.name}</td><td>${student.id}</td><td>待添加邮箱</td></tr>
                                     </c:forEach>
                                     </tbody>
                                 </table>
