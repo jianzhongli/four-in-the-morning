@@ -76,7 +76,16 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>AjaxSendMailServlet</servlet-name>
-        <url-pattern>/ajax/mailbox</url-pattern>
+        <url-pattern>/ajax/mailbox/send_mail</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AjaxGetMailServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxGetMailServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxGetMailServlet</servlet-name>
+        <url-pattern>/ajax/mailbox/get_mails</url-pattern>
     </servlet-mapping>
     <!--End AJAX related-->
 

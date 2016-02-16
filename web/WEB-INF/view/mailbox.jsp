@@ -49,7 +49,7 @@
                         <div class="card-content">
                             <div class="card-title"><h5>接收消息</h5></div>
                             <div class="row">
-                                <div class="col s12">
+                                <div class="col s12" id="mail_list">
                                     <ul class="collapsible popout" data-collapsible="accordion">
                                         <c:forEach items="${mail_list}" var="mail">
                                             <li>
@@ -69,7 +69,7 @@
                                     <ul class="pagination center-align">
                                         <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
                                         <li class="active"><a href="#!">1</a></li>
-                                        <li class="waves-effect"><a href="#!">2</a></li>
+                                        <li class="waves-effect" onclick="get_mails(2)"><a href="#!">2</a></li>
                                         <li class="waves-effect"><a href="#!">3</a></li>
                                         <li class="waves-effect"><a href="#!">4</a></li>
                                         <li class="waves-effect"><a href="#!">5</a></li>
