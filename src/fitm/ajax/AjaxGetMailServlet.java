@@ -24,7 +24,7 @@ public class AjaxGetMailServlet extends HttpServlet {
 
         if (user != null) {
             String pageIndexString = req.getParameter(Tags.TAG_MAIL_PAGE_INDEX);
-            if (pageIndexString.matches("^[1-9][0-9]*")) { // 页数输入检查
+            if (pageIndexString.matches("^[0-9]*")) { // 页数输入检查
                 int pageIndex = Integer.parseInt(pageIndexString);
                 response = new Success(Mail.getMailsList(user.getId(), Mail.defaultPageSize, pageIndex));
             } else {

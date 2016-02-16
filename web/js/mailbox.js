@@ -76,7 +76,6 @@ function set_mails_content(data) {
 }
 
 function get_mails(pageIndex) {
-    var defaultPageSize = 6;
     if (pageIndex != null) {
         var xhttp = new XMLHttpRequest();
         xhttp.open("POST", "/ajax/mailbox/get_mails", true);
@@ -95,4 +94,17 @@ function get_mails(pageIndex) {
         }
         xhttp.send("mail_page_index=" + pageIndex);
     }
+}
+
+window.onload = function() {
+    var defaultPageSize = 6;
+    var num_entries = parseInt($("#hide_num_entries").html());
+    $("#Pagination").pagination(num_entries, {
+        num_edge_entries: 1,
+        num_display_entries: 4,
+        items_per_page: defaultPageSize,
+        prev_text: "上一页",
+        next_text: "下一页",
+        callback: get_mails
+    })
 }

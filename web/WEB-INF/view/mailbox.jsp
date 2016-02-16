@@ -48,33 +48,13 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-title"><h5>接收消息</h5></div>
+                            <div id="hide_num_entries" class="hide"><c:out value="${requestScope.mail_list_size}"/></div>
                             <div class="row">
-                                <div class="col s12" id="mail_list">
-                                    <ul class="collapsible popout" data-collapsible="accordion">
-                                        <c:forEach items="${mail_list}" var="mail">
-                                            <li>
-                                                <div class="collapsible-header">
-                                                    <span>${mail.getFrom()}<i class="material-icons">perm_identity</i></span>
-                                                </div>
-                                                <div class="collapsible-body">
-                                                    <p>${mail.getContent()}</p>
-                                                </div>
-                                            </li>
-                                        </c:forEach>
-                                    </ul>
-                                </div>
+                                <div class="col s12" id="mail_list"></div>
                             </div>
                             <div class="row">
                                 <div class="col s12">
-                                    <ul class="pagination center-align">
-                                        <li class="disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-                                        <li class="active"><a href="#!">1</a></li>
-                                        <li class="waves-effect" onclick="get_mails(2)"><a href="#!">2</a></li>
-                                        <li class="waves-effect"><a href="#!">3</a></li>
-                                        <li class="waves-effect"><a href="#!">4</a></li>
-                                        <li class="waves-effect"><a href="#!">5</a></li>
-                                        <li class="waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
-                                    </ul>
+                                    <ul id="Pagination" class="pagination center-align"></ul>
                                 </div>
                             </div>
                         </div>
@@ -84,8 +64,9 @@
         </div>
 
         <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
+        <script type="text/javascript" src="../../js/jquery.pagination.js"></script>
         <script type="text/javascript" src="../../js/materialize.min.js"></script>
-        <script src="../../js/header.js" type="application/javascript"></script>
+        <script type="text/javascript" src="../../js/header.js"></script>
         <script type="text/javascript" src="../../js/mailbox.js"></script>
     </body>
 </html>
