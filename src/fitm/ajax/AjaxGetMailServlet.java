@@ -12,6 +12,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class AjaxGetMailServlet extends HttpServlet {
     @Override
@@ -35,5 +38,18 @@ public class AjaxGetMailServlet extends HttpServlet {
         }
 
         writer.write(Utils.getGson().toJson(response));
+    }
+
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        resp.setCharacterEncoding("UTF-8");
+        req.setCharacterEncoding("UTF-8");
+        User user = Utils.getCurrentUser(req);
+
+        if (user != null) {
+            String mailFrom = req.getParameter(Tags.TAG_MAIL_FROM);
+            Timestamp mailDate = new Timestamp(Long.valueOf(req.getParameter(Tags.TAG_MAIL_DATE)));
+            Mail.readMail(new Mail(mailFrom, user.getId(), "", mailDate, true));
+        }
     }
 }
