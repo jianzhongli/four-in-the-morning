@@ -6,7 +6,7 @@
         <ul class="right hide-on-med-and-down">
             <li><a href="/">总览</a></li>
             <li><a href="/courses">课程</a></li>
-            <li><a href="/mailbox">信箱</a></li>
+            <li><a id="header_mailbox" href="/mailbox">信箱</a></li>
             <li><a href="/message">消息</a></li>
             <!-- Dropdown Trigger -->
             <li><a class="dropdown-button" data-activates="dropdown-main">${user.name} (${user.id})

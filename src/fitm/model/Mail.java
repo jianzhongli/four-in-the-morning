@@ -133,30 +133,41 @@ public class Mail {
         return mailArrayList;
     }
 
-    public static int getMailsListMaxSize(String userid) throws ServletException {
+    public static String getMailsListInfo(String userid) throws ServletException {
         int maxSize = 0;
+        int unRead = 0;
 
         try {
             String column = "mail_rows";
             PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
-                    String.format("SELECT COUNT(1) AS %s FROM %s WHERE %s = ?",
+                    String.format("SELECT %s, COUNT(1) AS %s FROM %s WHERE %s = ? GROUP BY %s",
+                            SQLHelper.Columns.HAS_READ,
                             column,
                             SQLHelper.TABLE_MAILBOX,
-                            SQLHelper.Columns.MAIL_TO
+                            SQLHelper.Columns.MAIL_TO,
+                            SQLHelper.Columns.HAS_READ
                     )
             );
             pstat.setString(1, userid);
             ResultSet rs = pstat.executeQuery();
             if (rs != null) {
+                int columnValue = 0;
                 while (rs.next()) {
-                    maxSize = rs.getInt(column);
+                    columnValue = rs.getInt(column);
+                    maxSize += columnValue;
+
+                    if (rs.getInt(SQLHelper.Columns.HAS_READ) == 0) {
+                        unRead += columnValue;
+                    }
                 }
             }
             SQLHelper.getInstance().closeResultSet(rs);
         } catch (SQLException ex) {
             Logger.getLogger(Mail.class.getName()).log(Level.SEVERE, null, ex);
         }
-        System.out.println("mylog: " + maxSize);
-        return maxSize;
+
+        String json = "{\"maxSize\":" + maxSize + ", \"unRead\":" + unRead + "}";
+
+        return json;
     }
 }

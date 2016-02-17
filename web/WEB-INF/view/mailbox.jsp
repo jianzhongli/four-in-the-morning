@@ -48,7 +48,7 @@
                     <div class="card">
                         <div class="card-content">
                             <div class="card-title"><h5>接收消息</h5></div>
-                            <div id="hide_num_entries" class="hide"><c:out value="${requestScope.mail_list_size}"/></div>
+                            <div id="hide_num_entries" class="hide"><c:out value="${requestScope.mail_list_info}"/></div>
                             <div class="row">
                                 <div class="col s12" id="mail_list"></div>
                             </div>
