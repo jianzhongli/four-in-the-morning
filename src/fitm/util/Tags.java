@@ -21,7 +21,7 @@ public interface Tags {
     final static String TAG_MAIL_TO = "mail_to";
     final static String TAG_MAIL_CONTENT = "mail_content";
     final static String TAG_MAIL_LIST = "mail_list";
-    final static String TAG_MAIL_LIST_SIZE = "mail_list_size";
+    final static String TAG_MAIL_LIST_INFO = "mail_list_info";
     final static String TAG_MAIL_PAGE_INDEX = "mail_page_index";
 
     final static String DATA_SOURCE_PREFIX = "java:comp/env/";

@@ -55,6 +55,10 @@ function set_mails_content(data) {
             li_mail_item.appendChild(div_item_header);
 
             var span_header_container = document.createElement("span");
+            if (!mail.has_read) {
+                span_header_container.setAttribute("class", "teal-text");
+                div_item_header.setAttribute("onclick", "update_unread(this)");
+            }
             span_header_container.innerHTML = mail.from;
             div_item_header.appendChild(span_header_container);
 
@@ -96,9 +100,41 @@ function get_mails(pageIndex) {
     }
 }
 
+function set_unread(num) {
+    if (num != null) {
+        var span_un_read = document.createElement("span");
+        span_un_read.setAttribute("class", "badge red white-text");
+        span_un_read.setAttribute("id", "un_read_mails_num");
+        span_un_read.innerHTML = num;
+        document.getElementById("header_mailbox").appendChild(span_un_read);
+    } else {
+        var span_un_read = document.getElementById("un_read_mails_num");
+        if (span_un_read.style.display != "none") {
+            var cur_num = parseInt(span_un_read.innerHTML);
+            if (cur_num - 1 > 0) {
+                span_un_read.innerHTML = cur_num - 1;
+            } else {
+                span_un_read.style.display = "none";
+            }
+        }
+    }
+}
+
+function update_unread(obj) {
+    obj.setAttribute("onclick", "");
+    obj.firstElementChild.setAttribute("class", "");
+    set_unread(null);
+}
+
 window.onload = function() {
+    var mail_list_info = JSON.parse($("#hide_num_entries").html());
+    var unRead = parseInt(mail_list_info.unRead);
+    if (unRead != 0) {
+        set_unread(unRead);
+    }
+
     var defaultPageSize = 6;
-    var num_entries = parseInt($("#hide_num_entries").html());
+    var num_entries = parseInt(mail_list_info.maxSize);
     $("#Pagination").pagination(num_entries, {
         num_edge_entries: 1,
         num_display_entries: 4,

@@ -2,6 +2,8 @@
 <html>
     <head>
         <link type="text/css" rel="stylesheet" href="../../css/materialize.min.css"  media="screen,projection"/>
+        <link type="text/css" rel="stylesheet" href="../../css/style.css" />
+        <link type="text/css" rel="stylesheet" href="../../css/loader.css" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
         <style>
@@ -21,7 +23,7 @@
 
     <body class="grey lighten-5">
         <div class="container valign-wrapper">
-            <div class="card valign">
+            <div class="card valign" id="login-card">
                 <div class="card-content">
                     <div class="row">
                         <div class="input-field col s12">
@@ -42,6 +44,7 @@
                 </div>
             </div>
         </div>
+        <div class="loader" id="loader">Loading...</div>
 
         <!--Import jQuery before materialize.js-->
         <script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.1.min.js"></script>
