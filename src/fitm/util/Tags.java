@@ -18,8 +18,10 @@ public interface Tags {
     final static String TAG_POST_DATE = "post_date";
     final static String TAG_DDL = "ddl";
     final static String TAG_USERTYPE = "userType";
+    final static String TAG_MAIL_FROM = "mail_from";
     final static String TAG_MAIL_TO = "mail_to";
     final static String TAG_MAIL_CONTENT = "mail_content";
+    final static String TAG_MAIL_DATE = "mail_date";
     final static String TAG_MAIL_LIST = "mail_list";
     final static String TAG_MAIL_LIST_INFO = "mail_list_info";
     final static String TAG_MAIL_PAGE_INDEX = "mail_page_index";

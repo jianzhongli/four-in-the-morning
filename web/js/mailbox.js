@@ -57,7 +57,7 @@ function set_mails_content(data) {
             var span_header_container = document.createElement("span");
             if (!mail.has_read) {
                 span_header_container.setAttribute("class", "teal-text");
-                div_item_header.setAttribute("onclick", "update_unread(this)");
+                li_mail_item.setAttribute("onclick", "update_unread(this)");
             }
             span_header_container.innerHTML = mail.from;
             div_item_header.appendChild(span_header_container);
@@ -71,9 +71,15 @@ function set_mails_content(data) {
             div_item_body.setAttribute("class", "collapsible-body");
             li_mail_item.appendChild(div_item_body);
 
-            var p_body_container = document.createElement("p");
-            p_body_container.innerHTML = mail.content;
-            div_item_body.appendChild(p_body_container);
+            var p_body_content = document.createElement("p");
+            p_body_content.innerHTML = mail.content;
+            p_body_content.appendChild(document.createElement("br"));
+            var span_body_content_time = document.createElement("span");
+            span_body_content_time.setAttribute("class", "right");
+            span_body_content_time.innerHTML = mail.date;
+            p_body_content.appendChild(span_body_content_time);
+            div_item_body.appendChild(p_body_content);
+
         }
         $('.collapsible').collapsible(); // Important! 重新加载jQuary
     }
@@ -122,8 +128,18 @@ function set_unread(num) {
 
 function update_unread(obj) {
     obj.setAttribute("onclick", "");
-    obj.firstElementChild.setAttribute("class", "");
+    obj.firstElementChild.firstElementChild.setAttribute("class", "");
     set_unread(null);
+
+    var mail_from = obj.firstElementChild.firstElementChild.innerHTML;
+    mail_from = mail_from.split("<i")[0];
+    var mail_date = obj.lastElementChild.firstElementChild.lastElementChild.innerHTML;
+    mail_date = new Date(mail_date).valueOf();
+    var send_content = "mail_from=" + mail_from + "&mail_date=" + mail_date;
+    var xhttp = new XMLHttpRequest();
+    xhttp.open("PUT", "/ajax/mailbox/get_mails?" + send_content, true);
+    xhttp.onreadystatechange = null;
+    xhttp.send();
 }
 
 window.onload = function() {

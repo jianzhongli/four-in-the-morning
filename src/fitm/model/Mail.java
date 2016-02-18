@@ -170,4 +170,27 @@ public class Mail {
 
         return json;
     }
+
+    public static boolean readMail(Mail mail) throws ServletException {
+        boolean flag = false;
+        try {
+            PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("UPDATE TOP(1) %s SET %s = ? WHERE %s = ? and %s >= ?",
+                            SQLHelper.TABLE_MAILBOX,
+                            SQLHelper.Columns.HAS_READ,
+                            SQLHelper.Columns.MAIL_TO,
+                            SQLHelper.Columns.MAIL_DATE)
+            );
+            pstat.setBoolean(1, mail.isHasRead());
+            pstat.setString(2, mail.getTo());
+            pstat.setTimestamp(3, mail.getDate());
+            if (pstat.executeUpdate() > 0) {
+                flag = true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Mail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return flag;
+    }
 }
