@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -45,8 +46,8 @@ public class HomeworkSubmission {
         return score;
     }
 
-    public static ArrayList<HomeworkSubmission> getSubmissionListByHomeworkId(String homework_id) throws ServletException {
-        ArrayList<HomeworkSubmission> arrayList = new ArrayList<>();
+    public static HashMap<String, HomeworkSubmission> getSubmissionMapByHomeworkId(String homework_id) throws ServletException {
+        HashMap<String, HomeworkSubmission> hashMap = new HashMap<>();
 
         String selection = SQLHelper.Columns.HOMEWORK_ID + " = ? ";
         String[] selectionArgs = {homework_id};
@@ -57,15 +58,20 @@ public class HomeworkSubmission {
             while (rs.next()) {
                 String student_id = rs.getString(SQLHelper.Columns.STUDENT_ID);
                 Timestamp submit_date = rs.getTimestamp(SQLHelper.Columns.SUBMIT_DATE);
-                String attatch_file = rs.getString(SQLHelper.Columns.ATTACH_FILE);
+                String attach_file = rs.getString(SQLHelper.Columns.ATTACH_FILE);
                 int score = rs.getInt(SQLHelper.Columns.SCORE);
-                arrayList.add(new HomeworkSubmission(
-                        homework_id, new Student(User.getUserById(student_id)), submit_date, attatch_file, score));
+                hashMap.put(
+                        student_id,
+                        new HomeworkSubmission(
+                                homework_id, new Student(User.getUserById(student_id)), submit_date, attach_file, score));
             }
         } catch (SQLException ex) {
             Logger.getLogger(HomeworkSubmission.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-        return arrayList;
+        return hashMap;
     }
+
+
 }
+

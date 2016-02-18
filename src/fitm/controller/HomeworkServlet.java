@@ -1,5 +1,6 @@
 package fitm.controller;
 
+import fitm.model.Class;
 import fitm.model.HomeworkPost;
 import fitm.model.HomeworkSubmission;
 import fitm.model.User;
@@ -11,7 +12,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 
 public class HomeworkServlet extends HttpServlet {
     @Override
@@ -23,12 +23,11 @@ public class HomeworkServlet extends HttpServlet {
         if (user != null) {
             String[] pathItems = req.getRequestURI().split("[/]");
             String homework_id = pathItems[pathItems.length-1];
-            System.out.println(homework_id);
             HomeworkPost homeworkPost = HomeworkPost.getHomeworkPostById(homework_id);
             if (homeworkPost != null) {
-                ArrayList arrayList = HomeworkSubmission.getSubmissionListByHomeworkId(homework_id);
                 req.setAttribute(Tags.TAG_HOMEWORK_POST, homeworkPost);
-                req.setAttribute(Tags.TAG_HOMEWORK_SUBMISSION_LIST, arrayList);
+                req.setAttribute(Tags.TAG_HOMEWORK_SUBMISSION_MAP, HomeworkSubmission.getSubmissionMapByHomeworkId(homework_id));
+                req.setAttribute(Tags.TAG_CLASS_LIST, Class.getClassesList(homeworkPost.getCourse_id(), user));
                 req.getRequestDispatcher(Path.HOMEWORK_SUBMISSIONS_PAGE).forward(req, resp);
             } else {
                 System.out.println("NULL");
