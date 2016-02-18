@@ -26,7 +26,7 @@ public class MainServlet extends HttpServlet {
         if (user != null) {
             req.getRequestDispatcher(Path.OVERVIEW).forward(req, resp);
         } else {
-            req.getRequestDispatcher("/login").forward(req, resp);
+            req.getRequestDispatcher(Path.PROMOTION).forward(req, resp);
         }
     }
 }
