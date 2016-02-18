@@ -30,6 +30,7 @@
                                             <c:when test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                                                 <a class="btn red waves-effect waves-light homework-post-action" onclick="delete_confirm('${homework.homework_id}')">删除</a>
                                                 <a class="btn waves-effect waves-light homework-post-action" onclick="edit_homework('${homework.homework_id}')">修改</a>
+                                                <a class="btn waves-effect waves-light homework-post-action" href="/homework/${homework.homework_id}">查看更多</a>
                                             </c:when>
                                             <c:otherwise>
                                                 <a class="btn waves-effect waves-light homework-post-action">交作业</a>

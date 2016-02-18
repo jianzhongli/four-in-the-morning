@@ -135,7 +135,7 @@ public class HomeworkPost {
         );
         if (rs != null) {
             try {
-                while (rs.next()) {
+                if (rs.next()) {
                     homeworkPost = new HomeworkPost(
                             rs.getString(SQLHelper.Columns.COURSE_ID),
                             rs.getString(SQLHelper.Columns.HOMEWORK_ID),

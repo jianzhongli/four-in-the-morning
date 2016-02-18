@@ -92,6 +92,15 @@
 
     <!--Controllers-->
     <servlet>
+        <servlet-name>HomeworkServlet</servlet-name>
+        <servlet-class>fitm.controller.HomeworkServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HomeworkServlet</servlet-name>
+        <url-pattern>/homework/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>MailboxServlet</servlet-name>
         <servlet-class>fitm.controller.MailboxServlet</servlet-class>
     </servlet>

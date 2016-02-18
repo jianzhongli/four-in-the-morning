@@ -13,6 +13,8 @@ public interface Tags {
     final static String TAG_ASSISTANT_COURSE_LIST = "assistant_course_list";
     final static String TAG_HOMEWORK_LIST = "homework_list";
     final static String TAG_HOMEWORK_TITLE = "homework_title";
+    final static String TAG_HOMEWORK_POST = "homework_post";
+    final static String TAG_HOMEWORK_SUBMISSION_LIST = "homework_submission_list";
     final static String TAG_HOMEWORK_DESCRIPTION = "homework_description";
     final static String TAG_ATTATCH_FILE = "attach_file";
     final static String TAG_POST_DATE = "post_date";

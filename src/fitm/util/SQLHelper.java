@@ -42,6 +42,7 @@ public class SQLHelper {
     final public static String TABLE_COURSE_CLASS = "COURSE_CLASS";
     final public static String TABLE_CLASS_STUDENT = "CLASS_STUDENT";
     final public static String TABLE_HOMEWORK_POST = "HOMEWORK_POST";
+    final public static String TABLE_HOMEWORK_SUBMISSION = "HOMEWORK_SUBMISSION";
     final public static String TABLE_MAILBOX = "MAILBOX";
     final public static String TABLE_CLASS_TA = "CLASS_TA";
 
