@@ -11,7 +11,7 @@
 </head>
 
 <body class="grey lighten-5">
-<jsp:include page="header.jsp" />
+<%@ include file="header.jsp" %>
 
 <div class="container">
     <div class="card">
@@ -82,10 +82,10 @@
             </div>
 
             <%--课件下载 TODO: 在数据库里补充这一部分--%>
-            <jsp:include page="slides.jsp" />
+            <%@ include file="slides.jsp" %>
 
             <%--作业情况--%>
-            <jsp:include page="homework.jsp"/>
+            <%@ include file="homework.jsp" %>
 
             <%--如果当前用户是老师，显示教学班列表--%>
             <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">

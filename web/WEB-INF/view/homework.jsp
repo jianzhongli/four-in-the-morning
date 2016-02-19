@@ -47,7 +47,6 @@
     </div>
 </div>
 
-
-<jsp:include page="modal-submit-homework.jsp"/>
-<jsp:include page="modal-post-homework.jsp" />
-<jsp:include page="modal-delete-confirm.jsp" />
+<%@ include file="modal-submit-homework.jsp" %>
+<%@ include file="modal-post-homework.jsp"  %>
+<%@ include file="modal-delete-confirm.jsp" %>

@@ -11,7 +11,7 @@
     </head>
 
     <body class="grey lighten-5">
-        <jsp:include page="header.jsp" />
+    <%@ include file="header.jsp" %>
 
         <div class="container">
             <div class="row">
