@@ -10,11 +10,6 @@
     <title>凌晨四点线上作业提交系统</title>
 </head>
 
-<%--如果是学生，先判断是不是这门课的 TA，下面就不用重复调用函数 isAssistantOfCourse()--%>
-<c:if test="${user.isStudent()}">
-    <c:set var="isAssitant" value="${user.isAssistantOfCourse(course.course_id)}" />
-</c:if>
-
 <body class="grey lighten-5">
 <jsp:include page="header.jsp" />
 
@@ -28,7 +23,7 @@
                             <li class="tab col s3"><a class="active" href="#overview">课程总览</a></li>
                             <li class="tab col s3"><a href="#slides">课件下载</a></li>
                             <li class="tab col s3"><a href="#homework">查看作业</a></li>
-                            <c:if test="${user.isTeacher() || isAssitant}">
+                            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                                 <li class="tab col s3"><a href="#students">学生列表</a></li>
                             </c:if>
                         </ul>
@@ -93,7 +88,7 @@
             <jsp:include page="homework.jsp"/>
 
             <%--如果当前用户是老师，显示教学班列表--%>
-            <c:if test="${user.isTeacher() || isAssitant}">
+            <c:if test="${user.isTeacher() || user.isAssistantOfCourse(course.course_id)}">
                 <div class="row">
                     <div class="col s12" id="students">
                         <c:forEach var="teaching_class" items="${course.classes}">
@@ -123,8 +118,6 @@
     </div>
 </div>
 
-<jsp:include page="modal-post-homework.jsp" />
-<jsp:include page="modal-delete-confirm.jsp" />
 <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="../../js/materialize.min.js"></script>
 <script src="../../js/header.js" type="application/javascript"></script>

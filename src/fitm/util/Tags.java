@@ -28,6 +28,8 @@ public interface Tags {
     final static String TAG_MAIL_LIST = "mail_list";
     final static String TAG_MAIL_LIST_INFO = "mail_list_info";
     final static String TAG_MAIL_PAGE_INDEX = "mail_page_index";
+    final static String TAG_FOLDER_HOMEWORK_SUBMISSION = "homework-submission";
+    final static String TAG_FOLDER_DOWNLOAD = "download";
 
     final static String DATA_SOURCE_PREFIX = "java:comp/env/";
     final static String DATA_SOURCE = "jdbc/keckacupa";

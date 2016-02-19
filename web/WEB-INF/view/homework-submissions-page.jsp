@@ -10,11 +10,6 @@
     <title>凌晨四点线上作业提交系统</title>
 </head>
 
-<%--如果是学生，先判断是不是这门课的 TA，下面就不用重复调用函数 isAssistantOfCourse()--%>
-<c:if test="${user.isStudent()}">
-    <c:set var="isAssitant" value="${user.isAssistantOfCourse(course.course_id)}" />
-</c:if>
-
 <body class="grey lighten-5">
 <jsp:include page="header.jsp" />
 

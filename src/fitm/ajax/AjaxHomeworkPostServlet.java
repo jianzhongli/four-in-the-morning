@@ -1,23 +1,25 @@
 package fitm.ajax;
 
-import fitm.controller.Path;
+import fitm.controller.FitmPath;
+import fitm.model.Course;
 import fitm.model.HomeworkPost;
 import fitm.model.User;
-import fitm.util.SQLHelper;
 import fitm.util.Tags;
 import fitm.util.Utils;
 import org.apache.commons.io.IOUtils;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletInputStream;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Timestamp;
 
 // TODO: 对参数合法性进行检查
@@ -87,9 +89,10 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         Response response;
 
         if (user != null) {
-            if (user.isTeacher()) {
-                String[] pathItems = req.getRequestURI().split("[/]");
-                String homework_id = pathItems[pathItems.length-1];
+            String[] pathItems = req.getRequestURI().split("[/]");
+            String homework_id = pathItems[pathItems.length-1];
+            String course_id = Course.getCourseIdFromHomeworkId(homework_id);
+            if (user.isTeacher() || user.isAssistantOfCourse(course_id)) {
                 if (HomeworkPost.deleteHomeworkPost(homework_id)) {
                     response = new Success(null);
                 } else {
@@ -123,10 +126,11 @@ public class AjaxHomeworkPostServlet extends HttpServlet {
         Part file_part = req.getPart(Tags.TAG_ATTATCH_FILE);
         if (file_part != null) {
             String extension = Utils.getSubmittedFileNameExtension(file_part);
-            attach_file = Path.HOMEWORK_POST_FILE_PATH + homework_id + extension;
-            IOUtils.copy(file_part.getInputStream(), new FileOutputStream(attach_file));
+            attach_file = FitmPath.HOMEWORK_POST_FILE_PATH + homework_id + extension;
+            File file = new File(getServletContext().getRealPath("/") + attach_file);
+            file.getParentFile().mkdirs();
+            IOUtils.copy(file_part.getInputStream(), new FileOutputStream(file));
         }
-
 
         return new HomeworkPost(course_id, homework_id, homework_title, homework_description, attach_file, post_date, ddl);
     }

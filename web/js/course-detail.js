@@ -45,7 +45,7 @@ function post_homework_to_server() {
     formData.append("homework_description", homework_description);
     formData.append("post_date", new Date().valueOf());
     formData.append("ddl", ddl);
-    //formData.append("attach_file", document.getElementById("attach_file").files[0]);
+    formData.append("attach_file", document.getElementById("attach_file").files[0]);
 
     xhttp = new XMLHttpRequest();
     xhttp.open("POST", "/ajax/homework", true);
@@ -87,6 +87,30 @@ function edit_homework(homework_id) {
                 $('#modal-post-homework').openModal();
             } else {
                 Materialize.toast(obj.msg, 2000);
+            }
+        }
+    }
+}
+
+function open_submit_homework_modal(homework_id) {
+    window.homework_id = homework_id;
+    $('#modal-submit-homework').openModal();
+}
+
+function submit_homework_to_server() {
+    var formData = new FormData();
+    formData.append("homework_id", window.homework_id);
+    formData.append("attach_file", document.getElementById("submission_attach_file").files[0]);
+    xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/ajax/submission", true);
+    xhttp.send(formData);
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var obj = JSON.parse(xhttp.responseText);
+            if (obj.success) {
+                Materialize.toast('提交成功', 2000);
+            } else {
+                Materialize.toast('提交失败：' + obj.msg, 2000);
             }
         }
     }

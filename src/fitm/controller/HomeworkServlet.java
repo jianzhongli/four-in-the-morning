@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HomeworkServlet extends HttpServlet {
     @Override
@@ -27,8 +28,15 @@ public class HomeworkServlet extends HttpServlet {
             if (homeworkPost != null) {
                 req.setAttribute(Tags.TAG_HOMEWORK_POST, homeworkPost);
                 req.setAttribute(Tags.TAG_HOMEWORK_SUBMISSION_MAP, HomeworkSubmission.getSubmissionMapByHomeworkId(homework_id));
-                req.setAttribute(Tags.TAG_CLASS_LIST, Class.getClassesList(homeworkPost.getCourse_id(), user));
-                req.getRequestDispatcher(Path.HOMEWORK_SUBMISSIONS_PAGE).forward(req, resp);
+                ArrayList<Class> classArrayList;
+                if (user.isTeacher()) {
+                    classArrayList = Class.getClassesList(homeworkPost.getCourse_id(), user);
+                } else {
+                    classArrayList = Class.getAssistantClassesList(homeworkPost.getCourse_id(), user);
+                }
+                req.setAttribute(Tags.TAG_CLASS_LIST, classArrayList);
+
+                req.getRequestDispatcher(FitmPath.HOMEWORK_SUBMISSIONS_PAGE).forward(req, resp);
             } else {
                 System.out.println("NULL");
             }

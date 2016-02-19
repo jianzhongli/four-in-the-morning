@@ -65,7 +65,35 @@ public class Class {
     }
 
     public static ArrayList<Class> getAssistantClassesList(String courseid, User user) throws ServletException {
+        // SELECT * FROM COURSE_CLASS WHERE course_id = ? AND class_id IN (SELECT class_id FROM CLASS_TA WHERE ta = ?)
         ArrayList<Class> classArrayList = new ArrayList<>();
+        String sql = String.format(
+                "SELECT * FROM %s WHERE %s = %s AND %s IN (SELECT %s FROM %s WHERE %s = %s)",
+                SQLHelper.TABLE_COURSE_CLASS,
+                SQLHelper.Columns.COURSE_ID, courseid, SQLHelper.Columns.CLASS_ID,
+                SQLHelper.Columns.CLASS_ID,
+                SQLHelper.TABLE_CLASS_TA,
+                SQLHelper.Columns.TA, user.getId()
+        );
+        ResultSet rs= SQLHelper.getInstance().executeQuery(sql);
+        try {
+            while(rs.next()) {
+                String classId = rs.getString(SQLHelper.Columns.CLASS_ID);
+                String className = rs.getString(SQLHelper.Columns.CLASS_NAME);
+                String teacherId = rs.getString(SQLHelper.Columns.TEACHER_ID);
+                Teacher teacher = new Teacher(User.getUserById(teacherId));
+                ArrayList<Student> studentsArrayList = Student.getStudentsList(classId);
+                classArrayList.add(new Class(classId, className, teacher, studentsArrayList));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                SQLHelper.getInstance().closeResultSet(rs);
+            } catch (SQLException ex) {
+                Logger.getLogger(User.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         return classArrayList;
     }

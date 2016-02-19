@@ -1,7 +1,6 @@
 package fitm.controller;
 
 import fitm.model.User;
-import fitm.util.Tags;
 import fitm.util.Utils;
 
 import javax.servlet.ServletException;
@@ -16,7 +15,7 @@ public class EditPasswordServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
-            req.getRequestDispatcher(Path.EDIT_PASSWORD).forward(req, resp);
+            req.getRequestDispatcher(FitmPath.EDIT_PASSWORD).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
         }

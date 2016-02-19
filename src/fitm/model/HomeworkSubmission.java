@@ -3,6 +3,7 @@ package fitm.model;
 import fitm.util.SQLHelper;
 
 import javax.servlet.ServletException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -44,6 +45,33 @@ public class HomeworkSubmission {
 
     public int getScore() {
         return score;
+    }
+
+    public static boolean insertHomeworkSubmission(HomeworkSubmission submission) throws ServletException {
+        boolean flag = false;
+        try {
+            PreparedStatement pstmt = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("INSERT INTO %s (%s, %s, %s, %s) VALUES (?, ?, ?, ?)",
+                            SQLHelper.TABLE_HOMEWORK_SUBMISSION,
+                            SQLHelper.Columns.HOMEWORK_ID,
+                            SQLHelper.Columns.STUDENT_ID,
+                            SQLHelper.Columns.SUBMIT_DATE,
+                            SQLHelper.Columns.ATTACH_FILE
+                    ));
+            pstmt.setString(1, submission.homework_id);
+            pstmt.setString(2, submission.getStudent().getId());
+            pstmt.setTimestamp(3, submission.getSubmit_date());
+            pstmt.setString(4, submission.getAttach_file());
+
+            if (pstmt.executeUpdate() >= 0) {
+                flag = true;
+            }
+            SQLHelper.getInstance().closePreparedStatement(pstmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeworkSubmission.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return flag;
     }
 
     public static HashMap<String, HomeworkSubmission> getSubmissionMapByHomeworkId(String homework_id) throws ServletException {

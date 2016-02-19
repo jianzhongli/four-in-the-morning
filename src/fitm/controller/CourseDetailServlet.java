@@ -26,7 +26,7 @@ public class CourseDetailServlet extends HttpServlet {
             if (course != null) {
                 req.setAttribute(Tags.TAG_COURSE, course);
                 req.setAttribute(Tags.TAG_HOMEWORK_LIST, homeworkPostArrayList);
-                req.getRequestDispatcher(Path.COURSE_DETAIL).forward(req, resp);
+                req.getRequestDispatcher(FitmPath.COURSE_DETAIL).forward(req, resp);
             } else {
                 resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             }

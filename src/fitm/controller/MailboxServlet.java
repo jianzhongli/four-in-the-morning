@@ -17,7 +17,7 @@ public class MailboxServlet extends HttpServlet {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
             req.setAttribute(Tags.TAG_MAIL_LIST_INFO, Mail.getMailsListInfo(user.getId()));
-            req.getRequestDispatcher(Path.MAILBOX).forward(req, resp);
+            req.getRequestDispatcher(FitmPath.MAILBOX).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
         }

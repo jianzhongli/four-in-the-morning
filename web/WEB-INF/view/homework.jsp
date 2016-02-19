@@ -33,7 +33,7 @@
                                                 <a class="btn waves-effect waves-light homework-post-action" href="/homework/${homework.homework_id}">查看更多</a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="btn waves-effect waves-light homework-post-action">交作业</a>
+                                                <a class="btn waves-effect waves-light homework-post-action" onclick="open_submit_homework_modal('${homework.homework_id}')">交作业</a>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
@@ -46,3 +46,8 @@
         </div>
     </div>
 </div>
+
+
+<jsp:include page="modal-submit-homework.jsp"/>
+<jsp:include page="modal-post-homework.jsp" />
+<jsp:include page="modal-delete-confirm.jsp" />

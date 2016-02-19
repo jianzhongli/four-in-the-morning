@@ -1,8 +1,6 @@
 package fitm.controller;
 
-import fitm.model.Course;
 import fitm.model.User;
-import fitm.util.Tags;
 import fitm.util.Utils;
 
 import javax.servlet.ServletException;
@@ -17,7 +15,7 @@ public class CoursesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         User user = Utils.getCurrentUser(req);
         if (user != null) {
-            req.getRequestDispatcher(Path.COURSES).forward(req, resp);
+            req.getRequestDispatcher(FitmPath.COURSES).forward(req, resp);
         } else {
             req.getRequestDispatcher("/login").forward(req, resp);
         }
