@@ -191,7 +191,7 @@ public class HomeworkPost {
     }
 
     public static boolean deleteHomeworkPost(String homework_id) throws ServletException {
-        String sql = String.format("DELETE FROM %s WHERE %s = %s",
+        String sql = String.format("DELETE FROM %s WHERE %s = %s;",
                 SQLHelper.TABLE_HOMEWORK_POST,
                 SQLHelper.Columns.HOMEWORK_ID,
                 homework_id

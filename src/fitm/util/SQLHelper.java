@@ -1,14 +1,10 @@
 package fitm.util;
 
-import fitm.model.HomeworkPost;
-import fitm.model.User;
-
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.ServletException;
 import javax.sql.DataSource;
 import java.sql.*;
-import java.util.jar.Pack200;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -122,9 +118,10 @@ public class SQLHelper {
 
             if (orderBy != null) {
                 // process the ORDER BY part
-                sb.append("ORDER BY " + orderBy);
+                sb.append(" ORDER BY " + orderBy);
             }
 
+            System.out.println(sb.toString());
             rs = stat.executeQuery(sb.toString());
         } catch (SQLException ex) {
             Logger.getLogger(SQLHelper.class.getName()).log(Level.SEVERE, null, ex);
@@ -133,6 +130,8 @@ public class SQLHelper {
     }
 
     public ResultSet executeQuery(String sql) {
+        System.out.println(sql);
+
         ResultSet rs = null;
         Connection conn;
         Statement stat;
@@ -147,6 +146,8 @@ public class SQLHelper {
     }
 
     public int executeUpdate(String sql) {
+        System.out.println(sql);
+
         Connection conn = null;
         Statement stat = null;
         int ret = -1;

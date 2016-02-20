@@ -1,6 +1,7 @@
 package fitm.model;
 
 import fitm.util.SQLHelper;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.ServletException;
 import java.sql.ResultSet;
@@ -76,6 +77,8 @@ public class Course {
     }
 
     public static ArrayList<Course> getCoursesList(User user) throws ServletException {
+        final long startTime = System.currentTimeMillis(); // for measuring performance
+
         ArrayList<Course> courseArrayList = new ArrayList<>();
         SQLHelper helper = SQLHelper.getInstance();
 
@@ -124,10 +127,15 @@ public class Course {
             }
         }
 
+        final long endTime = System.currentTimeMillis();
+        System.out.println("getCoursesList()" + (endTime-startTime));
+
         return courseArrayList;
     }
 
     public static Course getCourseDetail(String courseid, User user) throws ServletException {
+        final long startTime = System.currentTimeMillis(); // for measuring performance
+
         Course courseDetail = null;
         SQLHelper helper = SQLHelper.getInstance();
         String sql = String.format("SELECT * FROM %s WHERE %s = '%s'",
@@ -163,11 +171,17 @@ public class Course {
                 }
             }
         }
+
+        final long endTime = System.currentTimeMillis();
+        System.out.println("getCourseDetail()" + (endTime-startTime));
+
         return courseDetail;
     }
 
     // 获取该同学担任助教的课程列表
     public static ArrayList<Course> getAssistantCoursesList(User user) throws ServletException {
+        final long startTime = System.currentTimeMillis(); // for measuring performance
+
         // SELECT * FROM COURSE WHERE course_id IN
         //      (SELECT DISTINCT course_id FROM COURSE_CLASS WHERE class_id IN
         //          (SELECT class_id FROM CLASS_TA WHERE ta = <ta_id>));
@@ -193,10 +207,16 @@ public class Course {
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        final long endTime = System.currentTimeMillis();
+        System.out.println("getAssistantCoursesList()" + (endTime-startTime));
+
         return courseArrayList;
     }
 
     public static String getCourseIdFromHomeworkId(String homework_id) throws ServletException {
+        final long startTime = System.currentTimeMillis(); // for measuring performance
+
         String course_id = null;
         String[] columns = {SQLHelper.Columns.COURSE_ID};
         String selection = SQLHelper.Columns.HOMEWORK_ID + " = ? ";
@@ -218,6 +238,9 @@ public class Course {
                 Logger.getLogger(Course.class.getName()).log(Level.WARNING, null, ex);
             }
         }
+
+        final Long endTime = System.currentTimeMillis();
+        System.out.println("getCourseIdFromHomeworkId()" + (endTime-startTime));
 
         return course_id;
     }

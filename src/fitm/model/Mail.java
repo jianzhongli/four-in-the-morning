@@ -104,7 +104,7 @@ public class Mail {
 
         try {
             PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
-                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * ? ROWS FETCH NEXT ? ROWS ONLY",
+                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * ? ROWS FETCH NEXT ? ROWS ONLY;",
                             SQLHelper.TABLE_MAILBOX,
                             SQLHelper.Columns.MAIL_TO,
                             SQLHelper.Columns.MAIL_DATE)
