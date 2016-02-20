@@ -103,16 +103,22 @@ public class Mail {
         ArrayList<Mail> mailArrayList = new ArrayList<>();
 
         try {
-            PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
+            //SQL Server
+            /*PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
                     String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC OFFSET ? * ? ROWS FETCH NEXT ? ROWS ONLY;",
+                            SQLHelper.TABLE_MAILBOX,
+                            SQLHelper.Columns.MAIL_TO,
+                            SQLHelper.Columns.MAIL_DATE)*/
+            //MySQL
+            PreparedStatement pstat = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("SELECT * FROM %s WHERE %s = ? ORDER BY %s DESC LIMIT ? , ?;",
                             SQLHelper.TABLE_MAILBOX,
                             SQLHelper.Columns.MAIL_TO,
                             SQLHelper.Columns.MAIL_DATE)
             );
             pstat.setString(1, userid);
-            pstat.setInt(2, pageSize);
-            pstat.setInt(3, pageIndex);
-            pstat.setInt(4, pageSize);
+            pstat.setInt(2, pageSize * pageIndex);
+            pstat.setInt(3, pageSize);
             ResultSet rs = pstat.executeQuery();
             if (rs != null) {
                 while (rs.next()) {
