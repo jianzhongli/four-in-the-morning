@@ -10,6 +10,7 @@ public interface Tags {
     final static String TAG_HOMEWORK_ID = "homework_id";
     final static String TAG_COURSE = "course";
     final static String TAG_COURSE_LIST = "course_list";
+    final static String TAG_INTRO_TEXT = "intro_text";
     final static String TAG_CLASS_LIST = "class_list";
     final static String TAG_ASSISTANT_COURSE_LIST = "assistant_course_list";
     final static String TAG_HOMEWORK_LIST = "homework_list";

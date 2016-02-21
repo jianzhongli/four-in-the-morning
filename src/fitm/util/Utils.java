@@ -2,6 +2,7 @@ package fitm.util;
 
 import com.google.gson.Gson;
 import fitm.model.User;
+import org.pegdown.PegDownProcessor;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +20,7 @@ import java.util.logging.Logger;
 
 public class Utils {
     private static Gson gson;
+    private static PegDownProcessor pegDownProcessor;
 
     // private constructor to prevent instantiation
     private Utils() {}
@@ -44,5 +46,13 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static String markdownToHtml(String markdown) {
+        if (pegDownProcessor == null) {
+            pegDownProcessor = new PegDownProcessor();
+        }
+
+        return pegDownProcessor.markdownToHtml(markdown);
     }
 }

@@ -116,6 +116,31 @@ function submit_homework_to_server() {
     }
 }
 
+function open_modal_edit_intro() {
+    $('#modal-edit-course-intro').openModal();
+}
+
+function update_intro_text() {
+    var course_id = $('#course-id').val();
+    var intro_text = $('#intro-text').val();
+    var formData = new FormData();
+    formData.append("intro_text", intro_text);
+
+    xhttp = new XMLHttpRequest();
+    xhttp.open("POST", "/ajax/courses/"+course_id, true);
+    xhttp.send(formData);
+    xhttp.onreadystatechange = function () {
+        if (xhttp.readyState == 4 && xhttp.status == 200) {
+            var obj = JSON.parse(xhttp.responseText);
+            if (obj.success) {
+                window.location.reload();
+            } else {
+                Materialize.toast(obj.msg, 2000);
+            }
+        }
+    }
+}
+
 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();

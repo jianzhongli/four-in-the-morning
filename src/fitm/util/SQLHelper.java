@@ -51,6 +51,7 @@ public class SQLHelper {
         final static String COURSE_NAME             = "course_name";
         final static String COURSE_BEGIN            = "course_begin";
         final static String COURSE_END              = "course_end";
+        final static String INTRO_TEXT              = "intro_text";
         final static String CLASS_ID                = "class_id";
         final static String CLASS_NAME              = "class_name";
         final static String TEACHER_ID              = "teacher_id";

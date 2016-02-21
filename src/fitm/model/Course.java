@@ -1,13 +1,14 @@
 package fitm.model;
 
 import fitm.util.SQLHelper;
-import sun.rmi.runtime.Log;
+import fitm.util.Utils;
 
 import javax.servlet.ServletException;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,6 +19,7 @@ public class Course {
     private Date course_end;
     private Teacher teacher;
     private ArrayList<Class> classes;
+    private String intro_text;
 
     public Course(String course_id, String course_name, Date course_begin, Date course_end, Teacher teacher, ArrayList<Class> classes) {
         this.course_id = course_id;
@@ -76,6 +78,22 @@ public class Course {
         this.classes = classes;
     }
 
+    public String getIntro_text() {
+        return intro_text;
+    }
+
+    public void setIntro_text(String intro_text) {
+        this.intro_text = intro_text;
+    }
+
+    public String getHtmlIntroText() {
+        if (intro_text != null) {
+            return Utils.markdownToHtml(intro_text);
+        } else {
+            return "";
+        }
+    }
+
     public static ArrayList<Course> getCoursesList(User user) throws ServletException {
         final long startTime = System.currentTimeMillis(); // for measuring performance
 
@@ -104,8 +122,8 @@ public class Course {
                 while (rs.next()) {
                     String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
                     String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
-                    Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
-                    Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+                    Date courseBegin = rs.getDate(SQLHelper.Columns.COURSE_BEGIN);
+                    Date courseEnd = rs.getDate(SQLHelper.Columns.COURSE_END);
 
                     Teacher teacher = null;
                     if(user.isStudent()) {
@@ -147,8 +165,9 @@ public class Course {
                 while (rs.next()) {
                     String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
                     String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
-                    Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
-                    Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+                    Date courseBegin = rs.getDate(SQLHelper.Columns.COURSE_BEGIN);
+                    Date courseEnd = rs.getDate(SQLHelper.Columns.COURSE_END);
+                    String introText = rs.getString(SQLHelper.Columns.INTRO_TEXT);
 
                     if (user.isTeacher()) {
                         ArrayList<Class> classes = Class.getClassesList(courseid, user);
@@ -160,6 +179,7 @@ public class Course {
                         courseDetail = new Course(courseId, courseName, courseBegin, courseEnd,
                                 Student.getMyCourseTeacher(courseId, user.getId()), null);
                     }
+                    courseDetail.setIntro_text(introText);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
@@ -198,8 +218,8 @@ public class Course {
             while (rs.next()) {
                 String courseId = rs.getString(SQLHelper.Columns.COURSE_ID);
                 String courseName = rs.getString(SQLHelper.Columns.COURSE_NAME);
-                Date courseBegin = rs.getTimestamp(SQLHelper.Columns.COURSE_BEGIN);
-                Date courseEnd = rs.getTimestamp(SQLHelper.Columns.COURSE_END);
+                Date courseBegin = rs.getDate(SQLHelper.Columns.COURSE_BEGIN);
+                Date courseEnd = rs.getDate(SQLHelper.Columns.COURSE_END);
                 ArrayList<Class> classes = Class.getAssistantClassesList(courseId, user);
                 Teacher teacher = Student.getMyCourseTeacher(courseId, user.getId());
                 courseArrayList.add(new Course(courseId, courseName, courseBegin, courseEnd, teacher, classes));
@@ -243,5 +263,34 @@ public class Course {
         System.out.println("getCourseIdFromHomeworkId()" + (endTime-startTime));
 
         return course_id;
+    }
+
+    public static boolean updateCourseDetail(Course course) throws ServletException {
+        boolean flag = false;
+        try {
+            PreparedStatement pstmt = SQLHelper.getInstance().getConnection().prepareStatement(
+                    String.format("UPDATE %s SET %s=?, %s=?, %s=?, %s=? WHERE %s=?",
+                            SQLHelper.TABLE_COURSE,
+                            SQLHelper.Columns.COURSE_NAME,
+                            SQLHelper.Columns.COURSE_BEGIN,
+                            SQLHelper.Columns.COURSE_END,
+                            SQLHelper.Columns.INTRO_TEXT,
+                            SQLHelper.Columns.COURSE_ID
+                    ));
+            pstmt.setString(1, course.getCourse_name());
+            pstmt.setDate(2, course.getCourse_begin());
+            pstmt.setDate(3, course.getCourse_end());
+            pstmt.setString(4, course.getIntro_text());
+            pstmt.setString(5, course.getCourse_id());
+
+            if (pstmt.executeUpdate() >= 0) {
+                flag = true;
+            }
+            SQLHelper.getInstance().closePreparedStatement(pstmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(HomeworkPost.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return flag;
     }
 }
