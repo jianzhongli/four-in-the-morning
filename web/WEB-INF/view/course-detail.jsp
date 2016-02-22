@@ -37,31 +37,45 @@
             <div class="row" >
                 <div class="col s12" id="overview">
                     <div class="section">
-                        <h4>
+                        <h3>
                             ${course.course_name}
-                        </h4>
+                        </h3>
                     </div>
                     <div class="section">
-                        <h5>
+                        <h4>
                             课程简介
                             <c:if test="${user.isTeacher()}">
                                 <a id="button-edit-intro" class="btn-floating waves-effect waves-light" onclick="open_modal_edit_intro()">
                                     <i class="material-icons">mode_edit</i>
                                 </a>
                             </c:if>
-                        </h5>
+                        </h4>
                         <div class="divider"></div>
                         ${course.getHtmlIntroText()}
                     </div>
                     <div class="section">
-                        <h5>
+                        <h4>
                             助教名单
-                            <a id="button-assign-ta" class="btn-floating waves-effect waves-light">
+                            <a id="button-assign-ta" class="btn-floating waves-effect waves-light" onclick="open_modal_assign_ta()">
                                 <i class="material-icons">add</i>
                             </a>
-                        </h5>
+                        </h4>
                         <div class="divider"></div>
-                        暂时没有助教。
+                        <c:forEach var="teaching_class" items="${course.classes}">
+                            <h5>${teaching_class.class_name}</h5>
+                            <c:choose>
+                                <c:when test="${teaching_class.ta_list != null && !teaching_class.ta_list.isEmpty()}">
+                                    <c:forEach var="ta" items="${teaching_class.ta_list}">
+                                        <div class="chip">
+                                            ${ta.name}
+                                        </div>
+                                    </c:forEach>
+                                </c:when>
+                                <c:otherwise>
+                                    暂时没有助教。
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
                     </div>
                 </div>
             </div>
@@ -104,6 +118,7 @@
 </div>
 
 <%@ include file="modal-edit-course-intro.jsp" %>
+<%@ include file="modal-assign-ta.jsp" %>
 <script type="text/javascript" src="../../js/jquery-2.1.1.js"></script>
 <script type="text/javascript" src="../../js/materialize.min.js"></script>
 <script src="../../js/header.js" type="application/javascript"></script>

@@ -141,6 +141,33 @@ function update_intro_text() {
     }
 }
 
+function open_modal_assign_ta() {
+    $('#modal-assign-ta').openModal();
+}
+
+function send_ta_assignment_to_server() {
+    var ta_id = $('#ta_id').val();
+    var class_list = [];
+    $('[name=checkbox_classes]').each(function () {
+        class_list.push(this.value);
+    });
+    var json = {"id": ta_id, "class_list": class_list};
+    $.ajax({
+        url: '/ajax/assistants',
+        type: 'PUT',
+        contentType: 'application/json',
+        data: JSON.stringify(json),
+        dataType: 'json',
+        success: function(response) {
+            if (!response.success) {
+                Materialize.toast(response.msg, 2000);
+            } else { // 如果登录成功，重定向至用户个人主页
+                Materialize.toast('修改成功！', 2000);
+            }
+        }
+    });
+}
+
 $(document).ready(function(){
     // the "href" attribute of .modal-trigger must specify the modal ID that wants to be triggered
     $('.modal-trigger').leanModal();

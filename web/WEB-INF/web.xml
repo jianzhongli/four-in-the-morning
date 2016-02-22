@@ -32,11 +32,11 @@
     
     <servlet>
         <servlet-name>AjaxUpdateUserServlet</servlet-name>
-        <servlet-class>fitm.ajax.AjaxUpdateUserServlet</servlet-class>
+        <servlet-class>fitm.ajax.AjaxUserServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AjaxUpdateUserServlet</servlet-name>
-        <url-pattern>/ajax/user/update</url-pattern>
+        <url-pattern>/ajax/user/*</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -95,6 +95,15 @@
     <servlet-mapping>
         <servlet-name>AjaxHomeworkSubmissionServlet</servlet-name>
         <url-pattern>/ajax/submission</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name>AjaxAssistantServlet</servlet-name>
+        <servlet-class>fitm.ajax.AjaxAssistantServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AjaxAssistantServlet</servlet-name>
+        <url-pattern>/ajax/assistants</url-pattern>
     </servlet-mapping>
     <!--End AJAX related-->
 

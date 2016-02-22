@@ -47,7 +47,7 @@
                                 <div class="divider"></div>
                             </div>
                         </div>
-                        <a class="btn waves-light waves-effect" onclick="edit_password()">确认</a>
+                        <a class="btn waves-light waves-effect" onclick="edit_password('${user.id}')">确认</a>
                         <a class="btn-flat waves-ripple waves-effect" href="/">取消</a>
                     </div>
                 </div>

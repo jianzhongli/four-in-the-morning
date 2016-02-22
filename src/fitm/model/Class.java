@@ -13,6 +13,7 @@ public class Class {
     private String class_id;
     private String class_name;
     private Teacher teacher;
+    private ArrayList<Student> ta_list;
     private ArrayList<Student> students;
 
     public Class(String class_id, String class_name, Teacher teacher, ArrayList<Student> students) {
@@ -38,6 +39,14 @@ public class Class {
         return students;
     }
 
+    public ArrayList<Student> getTa_list() {
+        return ta_list;
+    }
+
+    public void setTa_list(ArrayList<Student> ta_list) {
+        this.ta_list = ta_list;
+    }
+
     public static ArrayList<Class> getClassesList(String courseid, User user) throws ServletException {
         ArrayList<Class> classeArrayList = new ArrayList<>();
         SQLHelper helper = SQLHelper.getInstance();
@@ -50,7 +59,22 @@ public class Class {
                 String className = rs.getString(SQLHelper.Columns.CLASS_NAME);
                 Teacher teacher = new Teacher(user);
                 ArrayList<Student> studentsArrayList = Student.getStudentsList(classId);
-                classeArrayList.add(new Class(classId, className, teacher, studentsArrayList));
+                Class teaching_class = new Class(classId, className, teacher, studentsArrayList);
+
+                String sql2 = String.format("SELECT %s FROM %s WHERE %s = '%s'",
+                        SQLHelper.Columns.TA, SQLHelper.TABLE_CLASS_TA, SQLHelper.Columns.CLASS_ID, classId);
+                ResultSet rs2 = helper.executeQuery(sql2);
+                ArrayList<Student> ta_list = new ArrayList<>();
+                try {
+                    while (rs2 != null && rs2.next()) {
+                        String ta_id = rs2.getString(SQLHelper.Columns.TA);
+                        ta_list.add(new Student(User.getUserById(ta_id)));
+                    }
+                } catch (SQLException ex) {
+                    throw ex;
+                }
+                teaching_class.setTa_list(ta_list);
+                classeArrayList.add(teaching_class);
             }
         } catch (SQLException ex) {
             Logger.getLogger(Course.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,5 +120,18 @@ public class Class {
         }
 
         return classArrayList;
+    }
+
+    public static boolean assignAssistantToClasses(String ta_id, ArrayList<String> class_list) throws ServletException {
+        boolean flag = false;
+        for (String class_id : class_list) {
+            String sql = String.format("INSERT INTO %s (%s, %s) VALUES (%s, %s)",
+                    SQLHelper.TABLE_CLASS_TA,
+                    SQLHelper.Columns.CLASS_ID, SQLHelper.Columns.TA,
+                    class_id, ta_id
+            );
+            flag = SQLHelper.getInstance().executeUpdate(sql) >= 0;
+        }
+        return flag;
     }
 }
